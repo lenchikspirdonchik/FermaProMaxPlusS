@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class ChooseWhatToPlant : MonoBehaviour
 {
     public int choose = 0;
-    public GameObject btnWheat, btnChicken, btnCow, btnDelete;
+    public GameObject btnWheat, btnChicken, btnCow, btnDelete, btnGet;
 
 
     private void Start()
@@ -21,6 +21,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         btnChicken.GetComponent<Graphic>().color = Color.white;
         btnCow.GetComponent<Graphic>().color = Color.white;
         btnDelete.GetComponent<Graphic>().color = Color.white;
+        btnGet.GetComponent<Graphic>().color = Color.white;
         switch (choose)
         {
             case 0:
@@ -34,6 +35,9 @@ public class ChooseWhatToPlant : MonoBehaviour
                 break;
             case 3:
                 btnDelete.GetComponent<Graphic>().color = Color.red;
+                break;
+            case 4:
+                btnGet.GetComponent<Graphic>().color = Color.red;
                 break;
             default:
                 btnWheat.GetComponent<Graphic>().color = Color.red;

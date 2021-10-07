@@ -16,6 +16,7 @@ public class CreateSquare : MonoBehaviour
     {
         UnityThread.initUnityThread();
     }
+
     private void OnMouseDown()
     {
         switch (choose.choose)
@@ -43,7 +44,14 @@ public class CreateSquare : MonoBehaviour
 
     private void Get()
     {
-        
+        if (isReady)
+        {
+            GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
+            var counter = int.Parse(txtWheat.text);
+            counter++;
+            txtWheat.text = counter.ToString();
+            PlantWheat();
+        }
     }
 
     private void Delete()
@@ -74,14 +82,11 @@ public class CreateSquare : MonoBehaviour
         {
             Thread.Sleep(10000);
             isReady = true;
-            Debug.Log("Is Ready");
             UnityThread.executeInUpdate(() =>
             {
                 GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
             });
         }));
         t.Start();
-        
-       
     }
 }
