@@ -8,6 +8,7 @@ public class ChooseWhatToPlant : MonoBehaviour
     public int choose = 0;
     public GameObject btnWheat, btnChicken, btnCow, btnDelete;
 
+
     private void Start()
     {
         btnWheat.GetComponent<Graphic>().color = Color.red;
