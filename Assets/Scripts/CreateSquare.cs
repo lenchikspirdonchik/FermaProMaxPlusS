@@ -9,7 +9,7 @@ public class CreateSquare : MonoBehaviour
     public GameObject cow;
     public ChooseWhatToPlant choose;
     public Text txtWheat, txtChicken, txtCow;
-    private int whatIsActive = 0;
+    private int whatIsActive = 3;
     private bool isReady = false;
 
     void Awake()
@@ -46,11 +46,15 @@ public class CreateSquare : MonoBehaviour
     {
         if (isReady)
         {
-            GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
-            var counter = int.Parse(txtWheat.text);
-            counter++;
-            txtWheat.text = counter.ToString();
-            PlantWheat();
+            if (whatIsActive == 0)
+            {
+                GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
+                var counter = int.Parse(txtWheat.text);
+                counter++;
+                txtWheat.text = counter.ToString();
+                isReady = false;
+                PlantWheat();
+            }
         }
     }
 
@@ -61,7 +65,9 @@ public class CreateSquare : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        whatIsActive = 0;
+        GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
+        isReady = false;
+        whatIsActive = 3;
     }
 
     private void Add(GameObject obj)
@@ -72,21 +78,26 @@ public class CreateSquare : MonoBehaviour
             Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
             Instantiate(obj, vector3, Quaternion.identity, transform);
             whatIsActive = choose.choose;
-            PlantWheat();
+            if (whatIsActive == 0) PlantWheat();
+            //if (whatIsActive == 1) PlantChicken();
+            //if (whatIsActive == 2) PlantCow();
         }
     }
 
     private void PlantWheat()
     {
-        Thread t = new Thread(new ThreadStart(() =>
+        Thread t = new Thread(() =>
         {
             Thread.Sleep(10000);
             isReady = true;
-            UnityThread.executeInUpdate(() =>
+            if (whatIsActive != 3)
             {
-                GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-            });
-        }));
+                UnityThread.executeInUpdate(() =>
+                {
+                    GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                });
+            }
+        });
         t.Start();
     }
 }
