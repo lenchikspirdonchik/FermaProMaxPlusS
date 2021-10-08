@@ -7,11 +7,39 @@ public class ChooseWhatToPlant : MonoBehaviour
 {
     public int choose = 0;
     public GameObject btnWheat, btnChicken, btnCow, btnDelete, btnGet;
+    public Text txtMoney;
 
 
     private void Start()
     {
         btnWheat.GetComponent<Graphic>().color = Color.red;
+    }
+
+    public void Sell(Text txt)
+    {
+        int product = int.Parse(txt.text);
+        if (product > 0)
+        {
+            product--;
+            txt.text = product.ToString();
+
+            int money = int.Parse(txtMoney.text);
+
+            switch (txt.name)
+            {
+                case "txtWheat":
+                    money += 2;
+                    break;
+                case "txtChicken":
+                    money += 3;
+                    break;
+                case "txtCow":
+                    money += 4;
+                    break;
+            }
+
+            txtMoney.text = money.ToString();
+        }
     }
 
     public void Input(int input)
