@@ -8,7 +8,7 @@ public class ChooseWhatToPlant : MonoBehaviour
     public int choose = 0;
     public GameObject btnWheat, btnChicken, btnCow, btnDelete, btnGet;
     public Text txtMoney;
-
+    public AudioSource audio;
 
     private void Start()
     {
@@ -17,6 +17,7 @@ public class ChooseWhatToPlant : MonoBehaviour
 
     public void Sell(Text txt)
     {
+        audio.Play();
         int product = int.Parse(txt.text);
         if (product > 0)
         {
@@ -44,6 +45,7 @@ public class ChooseWhatToPlant : MonoBehaviour
 
     public void Input(int input)
     {
+        audio.Play();
         choose = input;
         btnWheat.GetComponent<Graphic>().color = Color.white;
         btnChicken.GetComponent<Graphic>().color = Color.white;
