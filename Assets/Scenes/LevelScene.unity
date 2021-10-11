@@ -3489,7 +3489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u044B\u0439\u0442\u0438 \u0432 \u043C\u0435\u043D\u044E"
+  m_Text: "\u0412\u044B\u0439\u0442\u0438"
 --- !u!222 &770412732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5310,6 +5310,9 @@ MonoBehaviour:
   btnCow: {fileID: 1912567207}
   btnDelete: {fileID: 954292843}
   btnGet: {fileID: 1292952272}
+  txtWheat: {fileID: 103869022}
+  txtChicken: {fileID: 184143289}
+  txtCow: {fileID: 719086652}
   txtMoney: {fileID: 1533534071}
   audio: {fileID: 1157836112}
 --- !u!82 &1157836112

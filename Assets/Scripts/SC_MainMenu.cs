@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SC_MainMenu : MonoBehaviour
@@ -38,5 +39,28 @@ public class SC_MainMenu : MonoBehaviour
     {
         // Quit Game
         Application.Quit();
+    }
+
+    public void deleteSave(String gameLevel)
+    {
+        String buffPath = "Save_Cube (1).json";
+        String path;
+#if UNITY_ANDROID && !UNITY_EDITOR
+        path = Path.Combine(Application.persistentDataPath, buffPath);
+#else
+        path = Path.Combine(Application.dataPath, buffPath);
+#endif
+        if (File.Exists(path))
+        {
+            for (int i = 0; i < 64; i++)
+            {
+                path = Path.Combine(Application.dataPath, "Save_Cube (" + i + ").json");
+                File.Delete(path);
+            }
+            path = Path.Combine(Application.dataPath, "Save_data.json");
+            File.Delete(path);
+           
+        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
     }
 }

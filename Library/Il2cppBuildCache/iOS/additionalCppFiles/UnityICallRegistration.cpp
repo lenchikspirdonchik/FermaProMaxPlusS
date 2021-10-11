@@ -54,6 +54,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Application_get_isPlaying();
 		Register_UnityEngine_Application_get_isPlaying();
 
+		//System.String UnityEngine.Application::get_dataPath()
+		void Register_UnityEngine_Application_get_dataPath();
+		Register_UnityEngine_Application_get_dataPath();
+
 		//System.Void UnityEngine.Application::Quit(System.Int32)
 		void Register_UnityEngine_Application_Quit();
 		Register_UnityEngine_Application_Quit();
@@ -63,6 +67,14 @@ void RegisterAllStrippedInternalCalls()
 		Register_UnityEngine_Application_get_platform();
 
 	//End Registrations for type : UnityEngine.Application
+
+	//Start Registrations for type : UnityEngine.AsyncOperation
+
+		//System.Void UnityEngine.AsyncOperation::InternalDestroy(System.IntPtr)
+		void Register_UnityEngine_AsyncOperation_InternalDestroy();
+		Register_UnityEngine_AsyncOperation_InternalDestroy();
+
+	//End Registrations for type : UnityEngine.AsyncOperation
 
 	//Start Registrations for type : UnityEngine.AudioSettings
 
@@ -860,6 +872,18 @@ void RegisterAllStrippedInternalCalls()
 
 	//End Registrations for type : UnityEngine.Input
 
+	//Start Registrations for type : UnityEngine.JsonUtility
+
+		//System.Object UnityEngine.JsonUtility::FromJsonInternal(System.String,System.Object,System.Type)
+		void Register_UnityEngine_JsonUtility_FromJsonInternal();
+		Register_UnityEngine_JsonUtility_FromJsonInternal();
+
+		//System.String UnityEngine.JsonUtility::ToJsonInternal(System.Object,System.Boolean)
+		void Register_UnityEngine_JsonUtility_ToJsonInternal();
+		Register_UnityEngine_JsonUtility_ToJsonInternal();
+
+	//End Registrations for type : UnityEngine.JsonUtility
+
 	//Start Registrations for type : UnityEngine.Light
 
 		//System.Single UnityEngine.Light::get_bounceIntensity()
@@ -1451,6 +1475,26 @@ void RegisterAllStrippedInternalCalls()
 		Register_UnityEngine_Rigidbody_AddForce_Injected();
 
 	//End Registrations for type : UnityEngine.Rigidbody
+
+	//Start Registrations for type : UnityEngine.SceneManagement.SceneManager
+
+		//System.Int32 UnityEngine.SceneManagement.SceneManager::get_sceneCount()
+		void Register_UnityEngine_SceneManagement_SceneManager_get_sceneCount();
+		Register_UnityEngine_SceneManagement_SceneManager_get_sceneCount();
+
+		//System.Void UnityEngine.SceneManagement.SceneManager::GetSceneAt_Injected(System.Int32,UnityEngine.SceneManagement.Scene&)
+		void Register_UnityEngine_SceneManagement_SceneManager_GetSceneAt_Injected();
+		Register_UnityEngine_SceneManagement_SceneManager_GetSceneAt_Injected();
+
+	//End Registrations for type : UnityEngine.SceneManagement.SceneManager
+
+	//Start Registrations for type : UnityEngine.SceneManagement.SceneManagerAPIInternal
+
+		//UnityEngine.AsyncOperation UnityEngine.SceneManagement.SceneManagerAPIInternal::LoadSceneAsyncNameIndexInternal_Injected(System.String,System.Int32,UnityEngine.SceneManagement.LoadSceneParameters&,System.Boolean)
+		void Register_UnityEngine_SceneManagement_SceneManagerAPIInternal_LoadSceneAsyncNameIndexInternal_Injected();
+		Register_UnityEngine_SceneManagement_SceneManagerAPIInternal_LoadSceneAsyncNameIndexInternal_Injected();
+
+	//End Registrations for type : UnityEngine.SceneManagement.SceneManagerAPIInternal
 
 	//Start Registrations for type : UnityEngine.Screen
 
