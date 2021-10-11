@@ -14,6 +14,9 @@ public class ChooseWhatToPlant : MonoBehaviour
     {
         btnWheat.GetComponent<Graphic>().color = Color.red;
     }
+    public void Exit(String gameLevel){
+        UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
+    }
 
     public void Sell(Text txt)
     {

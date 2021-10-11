@@ -139,7 +139,7 @@ public class CreateSquare : MonoBehaviour
                         txtWheat.text = counter.ToString();
                     });
 
-                    Thread.Sleep(20000);
+                    Thread.Sleep(40000);
                     if (whatIsActive == 2)
                     {
                         isReady = true;
@@ -176,7 +176,7 @@ public class CreateSquare : MonoBehaviour
                         }
                     });
 
-                    Thread.Sleep(10000);
+                    Thread.Sleep(30000);
                     if (whatIsActive == 1)
                     {
                         isReady = true;
@@ -198,7 +198,7 @@ public class CreateSquare : MonoBehaviour
     {
         Thread t = new Thread(() =>
         {
-            Thread.Sleep(10000);
+            Thread.Sleep(20000);
 
             if (whatIsActive == 0)
             {
