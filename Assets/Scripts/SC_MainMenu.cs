@@ -45,7 +45,7 @@ public class SC_MainMenu : MonoBehaviour
     {
         String buffPath = "Save_Cube (1).json";
         String path;
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
         path = Path.Combine(Application.dataPath, buffPath);
@@ -54,13 +54,21 @@ public class SC_MainMenu : MonoBehaviour
         {
             for (int i = 0; i < 64; i++)
             {
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+        path = Path.Combine(Application.persistentDataPath, "Save_Cube (" + i + ").json");
+#else
                 path = Path.Combine(Application.dataPath, "Save_Cube (" + i + ").json");
+#endif
                 File.Delete(path);
             }
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+        path = Path.Combine(Application.persistentDataPath, "Save_data.json");
+#else
             path = Path.Combine(Application.dataPath, "Save_data.json");
+#endif
             File.Delete(path);
-           
         }
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
     }
 }

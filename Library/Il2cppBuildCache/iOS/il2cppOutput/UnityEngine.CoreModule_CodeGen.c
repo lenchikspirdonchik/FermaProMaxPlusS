@@ -91,8 +91,8 @@ extern void Application_Quit_m0B016F5CC91420F53C8844350ECD7FCA673226B2 (void);
 extern void Application_Quit_m8D720E5092786C2EE32310D85FE61C253D3B1F2A (void);
 // 0x00000031 System.Boolean UnityEngine.Application::get_isPlaying()
 extern void Application_get_isPlaying_m7BB718D8E58B807184491F64AFF0649517E56567 (void);
-// 0x00000032 System.String UnityEngine.Application::get_dataPath()
-extern void Application_get_dataPath_m026509C15A1E58FC6461EE7EC336EC18C9C2271E (void);
+// 0x00000032 System.String UnityEngine.Application::get_persistentDataPath()
+extern void Application_get_persistentDataPath_mBD9C84D06693A9DEF2D9D2206B59D4BCF8A03463 (void);
 // 0x00000033 UnityEngine.RuntimePlatform UnityEngine.Application::get_platform()
 extern void Application_get_platform_mB22F7F39CDD46667C3EF64507E55BB7DA18F66C4 (void);
 // 0x00000034 System.Void UnityEngine.Application::CallLowMemory()
@@ -2931,7 +2931,7 @@ static Il2CppMethodPointer s_methodPointers[1505] =
 	Application_Quit_m0B016F5CC91420F53C8844350ECD7FCA673226B2,
 	Application_Quit_m8D720E5092786C2EE32310D85FE61C253D3B1F2A,
 	Application_get_isPlaying_m7BB718D8E58B807184491F64AFF0649517E56567,
-	Application_get_dataPath_m026509C15A1E58FC6461EE7EC336EC18C9C2271E,
+	Application_get_persistentDataPath_mBD9C84D06693A9DEF2D9D2206B59D4BCF8A03463,
 	Application_get_platform_mB22F7F39CDD46667C3EF64507E55BB7DA18F66C4,
 	Application_CallLowMemory_m508B1899F8865EC715FE37ACB500C98B370F7329,
 	Application_CallLogCallback_m42BBBDDFC6BAD182D6D574F22C0B73F3F881D681,
@@ -6323,15 +6323,15 @@ static const Il2CppTokenRangePair s_rgctxIndices[50] =
 {
 	{ 0x02000018, { 0, 7 } },
 	{ 0x02000019, { 7, 4 } },
-	{ 0x020000E8, { 65, 7 } },
-	{ 0x020000E9, { 72, 7 } },
-	{ 0x020000EA, { 79, 9 } },
-	{ 0x020000EB, { 88, 11 } },
-	{ 0x020000EC, { 99, 3 } },
-	{ 0x020000F5, { 102, 8 } },
-	{ 0x020000F7, { 110, 4 } },
-	{ 0x020000F9, { 114, 5 } },
-	{ 0x020000FB, { 119, 6 } },
+	{ 0x020000E9, { 65, 7 } },
+	{ 0x020000EA, { 72, 7 } },
+	{ 0x020000EB, { 79, 9 } },
+	{ 0x020000EC, { 88, 11 } },
+	{ 0x020000ED, { 99, 3 } },
+	{ 0x020000F6, { 102, 8 } },
+	{ 0x020000F8, { 110, 4 } },
+	{ 0x020000FA, { 114, 5 } },
+	{ 0x020000FC, { 119, 6 } },
 	{ 0x06000023, { 11, 1 } },
 	{ 0x06000024, { 12, 1 } },
 	{ 0x0600012A, { 13, 2 } },
@@ -6505,13 +6505,13 @@ extern const CustomAttributesCacheGenerator g_UnityEngine_CoreModule_AttributeGe
 static TypeDefinitionIndex s_staticConstructorsToRunAtStartup[9] = 
 {
 	1426,
-	1549,
 	1550,
 	1551,
 	1552,
 	1553,
 	1554,
 	1555,
+	1556,
 	0,
 };
 IL2CPP_EXTERN_C const Il2CppCodeGenModule g_UnityEngine_CoreModule_CodeGenModule;
