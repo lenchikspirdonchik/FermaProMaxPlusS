@@ -20,7 +20,7 @@ public class CreateSquare : MonoBehaviour
     private void Start()
     {
         String buffPath = "Save_" + transform.name + ".json";
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
         path = Path.Combine(Application.dataPath, buffPath);
@@ -270,7 +270,7 @@ public class CreateSquare : MonoBehaviour
         t.Start();
     }
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
     private void OnApplicationPause(bool pause)
     {
         save.whatIsActive = whatIsActive;
