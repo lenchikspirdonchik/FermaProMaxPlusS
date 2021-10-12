@@ -18,7 +18,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         btnWheat.GetComponent<Graphic>().color = Color.red;
 
         String buffPath = "Save_data.json";
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
         path = Path.Combine(Application.dataPath, buffPath);
@@ -100,7 +100,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         }
     }
     
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
     private void OnApplicationPause(bool pause)
     {
         save.textChicken = txtChicken.text;
