@@ -140,6 +140,7 @@ public class CreateSquare : MonoBehaviour
     private void Add(GameObject obj)
     {
         int money = int.Parse(txtMoney.text);
+        int wheat = int.Parse(txtWheat.text);
         if (transform.childCount == 0)
         {
             var position = transform.position;
@@ -152,7 +153,7 @@ public class CreateSquare : MonoBehaviour
                 PlantWheat();
             }
 
-            if (choose.choose == 1 && money > 1)
+            if (choose.choose == 1 && money > 1 && wheat > 2)
             {
                 money -= 2;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
@@ -160,7 +161,7 @@ public class CreateSquare : MonoBehaviour
                 PlantChicken();
             }
 
-            if (choose.choose == 2 && money > 2)
+            if (choose.choose == 2 && money > 2 && wheat > 3)
             {
                 money -= 3;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
@@ -179,30 +180,31 @@ public class CreateSquare : MonoBehaviour
         {
             while (whatIsActive == 2)
             {
-                if (counter > 3)
+                while (whatIsActive != 2 && counter < 3)
                 {
+                    Thread.Sleep(1500);
+                    UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
+                }
+
+                UnityThread.executeInUpdate(() =>
+                {
+                    counter -= 3;
+                    txtWheat.text = counter.ToString();
+                });
+
+                Thread.Sleep(40000);
+
+
+                if (whatIsActive == 2)
+                {
+                    isReady = true;
+                    cowMilk++;
                     UnityThread.executeInUpdate(() =>
                     {
-                        counter -= 3;
-                        txtWheat.text = counter.ToString();
+                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
                     });
-
-                    Thread.Sleep(40000);
-                    while (whatIsActive != 2 && counter < 3)
-                    {
-                        Thread.Sleep(1000);
-                    }
-
-                    if (whatIsActive == 2)
-                    {
-                        isReady = true;
-                        cowMilk++;
-                        UnityThread.executeInUpdate(() =>
-                        {
-                            GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                        });
-                    }
                 }
+
 
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
@@ -217,34 +219,35 @@ public class CreateSquare : MonoBehaviour
         {
             while (whatIsActive == 1)
             {
-                if (counter > 1)
+                while (whatIsActive != 1 && counter < 2)
                 {
+                    Thread.Sleep(1500);
+                    UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
+                }
+
+                UnityThread.executeInUpdate(() =>
+                {
+                    if (chickenEgg % 3 == 0)
+                    {
+                        //Debug.Log(chickenEgg +" % 3 = "+chickenEgg % 3);
+                        counter--;
+                        txtWheat.text = counter.ToString();
+                    }
+                });
+
+                Thread.Sleep(30000);
+
+
+                if (whatIsActive == 1 && counter > 1)
+                {
+                    isReady = true;
+                    chickenEgg++;
                     UnityThread.executeInUpdate(() =>
                     {
-                        if (chickenEgg % 3 == 0)
-                        {
-                            //Debug.Log(chickenEgg +" % 3 = "+chickenEgg % 3);
-                            counter--;
-                            txtWheat.text = counter.ToString();
-                        }
+                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
                     });
-
-                    Thread.Sleep(30000);
-                    while (whatIsActive != 1 && counter < 1)
-                    {
-                        Thread.Sleep(1000);
-                    }
-
-                    if (whatIsActive == 1 && counter > 1)
-                    {
-                        isReady = true;
-                        chickenEgg++;
-                        UnityThread.executeInUpdate(() =>
-                        {
-                            GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                        });
-                    }
                 }
+
 
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
@@ -288,7 +291,6 @@ public class CreateSquare : MonoBehaviour
         save.isReady = isReady;
         File.WriteAllText(path, JsonUtility.ToJson(save));
     }
-    
 }
 
 [Serializable]
