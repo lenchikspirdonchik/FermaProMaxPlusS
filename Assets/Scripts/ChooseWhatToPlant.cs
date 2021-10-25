@@ -12,6 +12,7 @@ public class ChooseWhatToPlant : MonoBehaviour
     public Text txtWheat, txtChicken, txtCow, txtMoney;
     public AudioSource audio;
     public Transform camera;
+    public GameObject panel1, panel2, panel3;
     private SaveData save = new SaveData();
     private string path;
     public bool chickenOpen, cowOpen;
@@ -41,6 +42,12 @@ public class ChooseWhatToPlant : MonoBehaviour
             chickenOpen = save.chickenOpen;
             cowOpen = save.cowOpen;
         }
+        else
+        {
+            panel1.SetActive(true);
+            panel2.SetActive(true);
+            panel3.SetActive(true);
+        }
 
         wheatSquarePosition = new Vector3(-4.37f, 6.76f, -8.15f);
         chickenSquarePosition = new Vector3(-5.05f, 5.18f, 8.45f);
@@ -56,6 +63,13 @@ public class ChooseWhatToPlant : MonoBehaviour
         Application.Quit();
     }
 
+    public void closeHelp()
+    {
+        panel1.SetActive(false);
+        panel2.SetActive(false);
+        panel3.SetActive(false);
+    }
+    
     public void Sell(Text txt)
     {
         int product = int.Parse(txt.text);

@@ -52,7 +52,7 @@ public class SC_MainMenu : MonoBehaviour
 #endif
         if (File.Exists(path))
         {
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < 97; i++)
             {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, "Save_Cube (" + i + ").json");
