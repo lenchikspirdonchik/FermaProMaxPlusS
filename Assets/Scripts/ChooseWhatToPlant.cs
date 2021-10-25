@@ -156,7 +156,7 @@ public class ChooseWhatToPlant : MonoBehaviour
             {
                 money -= price;
                 switch (price)
-                { 
+                {
                     case 100:
                         chickenOpen = true;
                         btnChicken.GetComponent<Graphic>().color = Color.red;
