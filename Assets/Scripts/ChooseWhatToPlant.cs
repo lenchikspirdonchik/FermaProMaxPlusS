@@ -7,11 +7,14 @@ using UnityEngine.UIElements;
 public class ChooseWhatToPlant : MonoBehaviour
 {
     public int choose = 0;
-    public GameObject btnWheat, btnChicken, btnCow, btnDelete, btnGet;
+    public GameObject btnWheat, btnChicken, btnCow;
     public Text txtWheat, txtChicken, txtCow, txtMoney;
     public AudioSource audio;
+    public Transform camera;
     private SaveData save = new SaveData();
     private string path;
+    private Vector3 wheatSquarePosition, chickenSquarePosition, cowSquarePosition;
+    private Quaternion wheatSquareRotation, chickenSquareRotation, cowSquareRotation;
 
     private void Start()
     {
@@ -31,11 +34,16 @@ public class ChooseWhatToPlant : MonoBehaviour
             txtWheat.text = save.textWheat;
             txtMoney.text = save.textMoney;
         }
+
+        wheatSquarePosition = new Vector3(-4.37f, 6.76f, -8.15f);
+        chickenSquarePosition = new Vector3(-5.05f, 5.18f, 8.45f);
+        chickenSquareRotation = Quaternion.Euler(42.39f, 60.59f, 0f);
+        wheatSquareRotation = Quaternion.Euler(42.608f, 0.1f, 0f);
     }
 
 
     public void Exit(String gameLevel)
-    { 
+    {
         Application.Quit();
     }
 
@@ -74,31 +82,24 @@ public class ChooseWhatToPlant : MonoBehaviour
         btnWheat.GetComponent<Graphic>().color = Color.white;
         btnChicken.GetComponent<Graphic>().color = Color.white;
         btnCow.GetComponent<Graphic>().color = Color.white;
-        btnDelete.GetComponent<Graphic>().color = Color.white;
-        btnGet.GetComponent<Graphic>().color = Color.white;
         switch (choose)
         {
             case 0:
+                camera.position = wheatSquarePosition;
+                camera.rotation = wheatSquareRotation;
                 btnWheat.GetComponent<Graphic>().color = Color.red;
                 break;
             case 1:
+                camera.position = chickenSquarePosition;
+                camera.rotation = chickenSquareRotation;
                 btnChicken.GetComponent<Graphic>().color = Color.red;
                 break;
             case 2:
                 btnCow.GetComponent<Graphic>().color = Color.red;
                 break;
-            case 3:
-                btnDelete.GetComponent<Graphic>().color = Color.red;
-                break;
-            case 4:
-                btnGet.GetComponent<Graphic>().color = Color.red;
-                break;
-            default:
-                btnWheat.GetComponent<Graphic>().color = Color.red;
-                break;
         }
     }
-    
+
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
     private void OnApplicationPause(bool pause)
     {
@@ -117,7 +118,6 @@ public class ChooseWhatToPlant : MonoBehaviour
         save.textMoney = txtMoney.text;
         File.WriteAllText(path, JsonUtility.ToJson(save));
     }
-   
 }
 
 [Serializable]
