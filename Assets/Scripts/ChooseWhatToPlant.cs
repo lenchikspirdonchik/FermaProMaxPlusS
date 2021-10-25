@@ -37,7 +37,6 @@ public class ChooseWhatToPlant : MonoBehaviour
     public void Exit(String gameLevel)
     { 
         Application.Quit();
-        //UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
     }
 
     public void Sell(Text txt)

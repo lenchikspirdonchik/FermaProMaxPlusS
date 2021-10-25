@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class CreateSquare : MonoBehaviour
@@ -11,14 +12,22 @@ public class CreateSquare : MonoBehaviour
     public GameObject cow;
     public ChooseWhatToPlant choose;
     public Text txtWheat, txtChicken, txtCow, txtMoney;
+    public AudioSource audioChicken, audioCow;
+    public int ActiveSquare;
     private int whatIsActive = 3, chickenEgg = 0, cowMilk = 0;
     private bool isReady = false;
     private Save save = new Save();
     private string path;
 
+    private float lastClick = 0;
+    private float waitTime = 1.0f;
+    private float downTime;
+    private bool isHandled = false;
+
 
     private void Start()
     {
+        UnityThread.initUnityThread();
         String buffPath = "Save_" + transform.name + ".json";
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, buffPath);
@@ -37,57 +46,67 @@ public class CreateSquare : MonoBehaviour
             {
                 var position = transform.position;
                 Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-                if (whatIsActive == 0)
+                switch (whatIsActive)
                 {
-                    Instantiate(wheat, vector3, Quaternion.identity, transform);
-                    PlantWheat();
-                }
-
-                if (whatIsActive == 1)
-                {
-                    Instantiate(chicken, vector3, Quaternion.identity, transform);
-                    PlantChicken();
-                }
-
-                if (whatIsActive == 2)
-                {
-                    Instantiate(cow, vector3, Quaternion.identity, transform);
-                    PlantCow();
+                    case 0:
+                        Instantiate(wheat, vector3, Quaternion.identity, transform);
+                        PlantWheat();
+                        break;
+                    case 1:
+                        Instantiate(chicken, vector3, Quaternion.identity, transform);
+                        PlantChicken();
+                        break;
+                    case 2:
+                        Instantiate(cow, vector3, Quaternion.identity, transform);
+                        PlantCow();
+                        break;
                 }
             }
         }
     }
 
 
-    void Awake()
+    void OnMouseDown()
     {
-        UnityThread.initUnityThread();
-    }
+        downTime = Time.time;
+        isHandled = false;
 
-    private void OnMouseDown()
-    {
-        switch (choose.choose)
+        if (Time.time - lastClick < 0.3)
         {
-            case 0:
-                Add(wheat);
-                break;
-            case 1:
-                Add(chicken);
-                break;
-            case 2:
-                Add(cow);
-                break;
-            case 3:
-                Delete();
-                break;
-            case 4:
-                Get();
-                break;
-            default:
-                Add(wheat);
-                break;
+            //double clicked the target
+        }
+
+        lastClick = Time.time;
+        if (isReady) Get();
+        else
+        {
+            switch (ActiveSquare)
+            {
+                case 0:
+                    Add(wheat);
+                    break;
+                case 1:
+                    Add(chicken);
+                    break;
+                case 2:
+                    Add(cow);
+                    break;
+                default:
+                    Add(wheat);
+                    break;
+            }
         }
     }
+
+    void OnMouseDrag()
+    {
+        if ((Time.time > downTime + waitTime) && !isHandled)
+        {
+            isHandled = true;
+            Delete();
+        }
+    }
+
 
     private void Get()
     {
@@ -95,7 +114,7 @@ public class CreateSquare : MonoBehaviour
         {
             GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
 
-            if (whatIsActive == 0)
+            if (ActiveSquare == 0)
             {
                 var counter = int.Parse(txtWheat.text);
                 counter++;
@@ -103,7 +122,7 @@ public class CreateSquare : MonoBehaviour
                 PlantWheat();
             }
 
-            if (whatIsActive == 1)
+            if (ActiveSquare == 1)
             {
                 var counter = int.Parse(txtChicken.text);
                 counter += chickenEgg;
@@ -112,7 +131,7 @@ public class CreateSquare : MonoBehaviour
                 PlantChicken();
             }
 
-            if (whatIsActive == 2)
+            if (ActiveSquare == 2)
             {
                 var counter = int.Parse(txtCow.text);
                 counter += cowMilk;
@@ -140,35 +159,35 @@ public class CreateSquare : MonoBehaviour
     private void Add(GameObject obj)
     {
         int money = int.Parse(txtMoney.text);
-        int wheat = int.Parse(txtWheat.text);
+        int wheatCount = int.Parse(txtWheat.text);
         if (transform.childCount == 0)
         {
             var position = transform.position;
             Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-            if (choose.choose == 0 && money > 0)
+            if (ActiveSquare == 0 && money > 0)
             {
                 money--;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
-                whatIsActive = choose.choose;
                 PlantWheat();
             }
 
-            if (choose.choose == 1 && money > 1 && wheat > 2)
+            if (ActiveSquare == 1 && money > 1 && wheatCount > 2)
             {
                 money -= 2;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
-                whatIsActive = choose.choose;
+                audioChicken.Play();
                 PlantChicken();
             }
 
-            if (choose.choose == 2 && money > 2 && wheat > 3)
+            if (ActiveSquare == 2 && money > 2 && wheatCount > 3)
             {
                 money -= 3;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
-                whatIsActive = choose.choose;
+                audioCow.Play();
                 PlantCow();
             }
 
+            whatIsActive = ActiveSquare;
             txtMoney.text = money.ToString();
         }
     }
@@ -178,9 +197,9 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (whatIsActive == 2)
+            while (ActiveSquare == 2)
             {
-                while (whatIsActive != 2 && counter < 3)
+                while (ActiveSquare != 2 && counter < 3)
                 {
                     Thread.Sleep(1500);
                     UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
@@ -195,7 +214,7 @@ public class CreateSquare : MonoBehaviour
                 Thread.Sleep(40000);
 
 
-                if (whatIsActive == 2)
+                if (ActiveSquare == 2)
                 {
                     isReady = true;
                     cowMilk++;
@@ -217,9 +236,9 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (whatIsActive == 1)
+            while (ActiveSquare == 1)
             {
-                while (whatIsActive != 1 && counter < 2)
+                while (ActiveSquare != 1 && counter < 2)
                 {
                     Thread.Sleep(1500);
                     UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
@@ -238,7 +257,7 @@ public class CreateSquare : MonoBehaviour
                 Thread.Sleep(30000);
 
 
-                if (whatIsActive == 1 && counter > 1)
+                if (ActiveSquare == 1 && counter > 1)
                 {
                     isReady = true;
                     chickenEgg++;
@@ -261,7 +280,7 @@ public class CreateSquare : MonoBehaviour
         {
             Thread.Sleep(20000);
 
-            if (whatIsActive == 0)
+            if (ActiveSquare == 0)
             {
                 isReady = true;
                 UnityThread.executeInUpdate(() =>
