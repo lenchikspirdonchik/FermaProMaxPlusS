@@ -1,9 +1,9 @@
 using System;
 using System.IO;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class ChooseWhatToPlant : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class ChooseWhatToPlant : MonoBehaviour
     public Text txtWheat, txtChicken, txtCow, txtMoney;
     public AudioSource audio;
     public Transform camera;
-    public GameObject panel1, panel2, panel3;
+    public GameObject panel1, panel2, panel3, panel4;
     private SaveData save = new SaveData();
     private string path;
     public bool chickenOpen, cowOpen;
@@ -68,8 +68,9 @@ public class ChooseWhatToPlant : MonoBehaviour
         panel1.SetActive(false);
         panel2.SetActive(false);
         panel3.SetActive(false);
+        panel4.SetActive(false);
     }
-    
+
     public void Sell(Text txt)
     {
         int product = int.Parse(txt.text);
@@ -161,32 +162,34 @@ public class ChooseWhatToPlant : MonoBehaviour
 
     private void BuySquare(int price, Vector3 position, Quaternion rotation)
     {
-        if (EditorUtility.DisplayDialog("Домик заблокирован",
-            "Нужно разблокировать домик (" + price + "$)", "Разблокировать", "Отмена"))
+        audio.Play();
+        int money = int.Parse(txtMoney.text);
+        if (money > price)
         {
-            audio.Play();
-            int money = int.Parse(txtMoney.text);
-            if (money > price)
+            money -= price;
+            switch (price)
             {
-                money -= price;
-                switch (price)
-                {
-                    case 100:
-                        chickenOpen = true;
-                        btnChicken.GetComponent<Graphic>().color = Color.red;
-                        break;
-                    case 500:
-                        cowOpen = true;
-                        btnCow.GetComponent<Graphic>().color = Color.red;
-                        break;
-                }
-
-                camera.position = position;
-                camera.rotation = rotation;
+                case 100:
+                    chickenOpen = true;
+                    btnChicken.GetComponent<Graphic>().color = Color.red;
+                    break;
+                case 500:
+                    cowOpen = true;
+                    btnCow.GetComponent<Graphic>().color = Color.red;
+                    break;
             }
 
-            txtMoney.text = money.ToString();
+            camera.position = position;
+            camera.rotation = rotation;
         }
+        else
+        {
+            panel4.SetActive(true);
+
+
+        }
+
+        txtMoney.text = money.ToString();
     }
 
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
