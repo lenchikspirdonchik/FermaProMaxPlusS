@@ -197,36 +197,33 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (ActiveSquare == 2)
+            while (ActiveSquare != 2 && counter < 3)
             {
-                while (ActiveSquare != 2 && counter < 3)
-                {
-                    Thread.Sleep(1500);
-                    UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
-                }
-
-                UnityThread.executeInUpdate(() =>
-                {
-                    counter -= 3;
-                    txtWheat.text = counter.ToString();
-                });
-
-                Thread.Sleep(40000);
-
-
-                if (ActiveSquare == 2)
-                {
-                    isReady = true;
-                    cowMilk++;
-                    UnityThread.executeInUpdate(() =>
-                    {
-                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                    });
-                }
-
-
+                Thread.Sleep(1500);
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
+
+            UnityThread.executeInUpdate(() =>
+            {
+                counter -= 3;
+                txtWheat.text = counter.ToString();
+            });
+
+            Thread.Sleep(40000);
+
+
+            if (ActiveSquare == 2)
+            {
+                isReady = true;
+                cowMilk++;
+                UnityThread.executeInUpdate(() =>
+                {
+                    GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                });
+            }
+
+
+            UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
         });
         t.Start();
     }
@@ -236,40 +233,36 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (ActiveSquare == 1)
+            while (ActiveSquare != 1 && counter < 2)
             {
-                while (ActiveSquare != 1 && counter < 2)
-                {
-                    Thread.Sleep(1500);
-                    UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
-                }
-
-                UnityThread.executeInUpdate(() =>
-                {
-                    if (chickenEgg % 3 == 0)
-                    {
-                        //Debug.Log(chickenEgg +" % 3 = "+chickenEgg % 3);
-                        counter--;
-                        txtWheat.text = counter.ToString();
-                    }
-                });
-
-                Thread.Sleep(30000);
-
-
-                if (ActiveSquare == 1 && counter > 1)
-                {
-                    isReady = true;
-                    chickenEgg++;
-                    UnityThread.executeInUpdate(() =>
-                    {
-                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                    });
-                }
-
-
+                Thread.Sleep(1500);
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
+
+            UnityThread.executeInUpdate(() =>
+            {
+                if (chickenEgg % 3 == 0)
+                {
+                    counter--;
+                    txtWheat.text = counter.ToString();
+                }
+            });
+
+            Thread.Sleep(30000);
+
+
+            if (ActiveSquare == 1 && counter > 1)
+            {
+                isReady = true;
+                chickenEgg++;
+                UnityThread.executeInUpdate(() =>
+                {
+                    GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                });
+            }
+
+
+            UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
         });
         t.Start();
     }
