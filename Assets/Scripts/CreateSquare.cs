@@ -2,23 +2,20 @@ using System;
 using System.IO;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class CreateSquare : MonoBehaviour
 {
-    public GameObject wheat;
-    public GameObject chicken;
-    public GameObject cow;
-    public ChooseWhatToPlant choose;
+    public GameObject wheat, chicken, cow;
     public Text txtWheat, txtChicken, txtCow, txtMoney;
     public AudioSource audioChicken, audioCow;
-    public int ActiveSquare;
+    public int activeSquare;
+
     private int whatIsActive = 3, chickenEgg = 0, cowMilk = 0;
     private bool isReady = false;
     private Save save = new Save();
     private string path;
-
     private float lastClick = 0;
     private float waitTime = 1.0f;
     private float downTime;
@@ -30,7 +27,7 @@ public class CreateSquare : MonoBehaviour
         UnityThread.initUnityThread();
         String buffPath = "Save_" + transform.name + ".json";
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-        path = Path.Combine(Application.persistentDataPath, buffPath);
+            path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
         path = Path.Combine(Application.dataPath, buffPath);
 #endif
@@ -80,7 +77,7 @@ public class CreateSquare : MonoBehaviour
         if (isReady) Get();
         else
         {
-            switch (ActiveSquare)
+            switch (activeSquare)
             {
                 case 0:
                     Add(wheat);
@@ -107,6 +104,16 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
+    private void robSquare()
+    {
+        if (transform.childCount == 1)
+        {
+            Random rnd = new Random();
+            int chislo = rnd.Next(0, 500);
+            if (chislo == 0)
+                Delete();
+        }
+    }
 
     private void Get()
     {
@@ -114,7 +121,7 @@ public class CreateSquare : MonoBehaviour
         {
             GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
 
-            if (ActiveSquare == 0)
+            if (activeSquare == 0)
             {
                 var counter = int.Parse(txtWheat.text);
                 counter++;
@@ -122,7 +129,7 @@ public class CreateSquare : MonoBehaviour
                 PlantWheat();
             }
 
-            if (ActiveSquare == 1)
+            if (activeSquare == 1)
             {
                 var counter = int.Parse(txtChicken.text);
                 counter += chickenEgg;
@@ -131,7 +138,7 @@ public class CreateSquare : MonoBehaviour
                 PlantChicken();
             }
 
-            if (ActiveSquare == 2)
+            if (activeSquare == 2)
             {
                 var counter = int.Parse(txtCow.text);
                 counter += cowMilk;
@@ -164,14 +171,14 @@ public class CreateSquare : MonoBehaviour
         {
             var position = transform.position;
             Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-            if (ActiveSquare == 0 && money > 0)
+            if (activeSquare == 0 && money > 0)
             {
                 money--;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
                 PlantWheat();
             }
 
-            if (ActiveSquare == 1 && money > 1 && wheatCount > 2)
+            if (activeSquare == 1 && money > 1 && wheatCount > 2)
             {
                 money -= 2;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
@@ -179,7 +186,7 @@ public class CreateSquare : MonoBehaviour
                 PlantChicken();
             }
 
-            if (ActiveSquare == 2 && money > 2 && wheatCount > 3)
+            if (activeSquare == 2 && money > 2 && wheatCount > 3)
             {
                 money -= 3;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
@@ -187,7 +194,7 @@ public class CreateSquare : MonoBehaviour
                 PlantCow();
             }
 
-            whatIsActive = ActiveSquare;
+            whatIsActive = activeSquare;
             txtMoney.text = money.ToString();
         }
     }
@@ -197,7 +204,7 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (ActiveSquare != 2 && counter < 3)
+            while (activeSquare != 2 && counter < 3)
             {
                 Thread.Sleep(1500);
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
@@ -212,7 +219,7 @@ public class CreateSquare : MonoBehaviour
             Thread.Sleep(40000);
 
 
-            if (ActiveSquare == 2)
+            if (activeSquare == 2)
             {
                 isReady = true;
                 cowMilk++;
@@ -233,7 +240,7 @@ public class CreateSquare : MonoBehaviour
         var counter = int.Parse(txtWheat.text);
         Thread t = new Thread(() =>
         {
-            while (ActiveSquare != 1 && counter < 2)
+            while (activeSquare != 1 && counter < 2)
             {
                 Thread.Sleep(1500);
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
@@ -251,7 +258,7 @@ public class CreateSquare : MonoBehaviour
             Thread.Sleep(30000);
 
 
-            if (ActiveSquare == 1 && counter > 1)
+            if (activeSquare == 1 && counter > 1)
             {
                 isReady = true;
                 chickenEgg++;
@@ -273,7 +280,7 @@ public class CreateSquare : MonoBehaviour
         {
             Thread.Sleep(20000);
 
-            if (ActiveSquare == 0)
+            if (activeSquare == 0)
             {
                 isReady = true;
                 UnityThread.executeInUpdate(() =>
@@ -286,14 +293,14 @@ public class CreateSquare : MonoBehaviour
     }
 
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-    private void OnApplicationPause(bool pause)
-    {
-        save.whatIsActive = whatIsActive;
-        save.chickenEgg = chickenEgg;
-        save.cowMilk = cowMilk;
-        save.isReady = isReady;
-         File.WriteAllText(path, JsonUtility.ToJson(save));
-    }
+        private void OnApplicationPause(bool pause)
+        {
+            save.whatIsActive = whatIsActive;
+            save.chickenEgg = chickenEgg;
+            save.cowMilk = cowMilk;
+            save.isReady = isReady;
+             File.WriteAllText(path, JsonUtility.ToJson(save));
+        }
 #endif
     public void OnApplicationQuit()
     {

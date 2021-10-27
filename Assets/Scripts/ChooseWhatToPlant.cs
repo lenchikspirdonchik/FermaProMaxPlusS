@@ -1,23 +1,31 @@
 using System;
 using System.IO;
-using System.Threading;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class ChooseWhatToPlant : MonoBehaviour
 {
-    public int choose = 0;
-    public GameObject btnWheat, btnChicken, btnCow;
-    public Text txtWheat, txtChicken, txtCow, txtMoney;
-    public AudioSource audio;
-    public Transform camera;
+    [Header("Game objects")] [Tooltip("Help panels")]
     public GameObject panel1, panel2, panel3, panel4;
+
+    [Tooltip("is chicken or cow squares are open")]
+    public bool chickenOpen, cowOpen;
+
+
+    [Header("UI objects")] [Tooltip("Button to choose active square")]
+    public GameObject btnWheat, btnChicken, btnCow;
+
+    [Tooltip("Player bank texts")] public Text txtWheat, txtChicken, txtCow, txtMoney;
+    [Tooltip("What button was clicked")] public int choose = 0;
+    [Tooltip("In game audio")] public AudioSource audio;
+    [Tooltip("Main camera")] public Transform camera;
+
+
     private SaveData save = new SaveData();
     private string path;
-    public bool chickenOpen, cowOpen;
-    private Vector3 wheatSquarePosition, chickenSquarePosition, cowSquarePosition;
-    private Quaternion wheatSquareRotation, chickenSquareRotation, cowSquareRotation;
+    private Vector3 wheatSquarePosition, chickenSquarePosition, cowSquarePosition, realPosition;
+    private Quaternion wheatSquareRotation, chickenSquareRotation, cowSquareRotation, realRotation;
     private float downTime;
     private bool isHandled = false;
     private float lastClick = 0;
@@ -55,6 +63,8 @@ public class ChooseWhatToPlant : MonoBehaviour
         chickenSquareRotation = Quaternion.Euler(42.39f, 60.59f, 0f);
         wheatSquareRotation = Quaternion.Euler(42.608f, 0.1f, 0f);
         cowSquareRotation = Quaternion.Euler(31.614f, -44.887f, 0f);
+        realPosition = wheatSquarePosition;
+        realRotation = wheatSquareRotation;
     }
 
 
@@ -121,6 +131,14 @@ public class ChooseWhatToPlant : MonoBehaviour
         return money;
     }
 
+    private void FixedUpdate()
+    {
+        camera.transform.position = Vector3.Lerp(camera.transform.position, realPosition, Time.deltaTime * 5);
+        camera.transform.rotation =
+            Quaternion.RotateTowards(camera.transform.rotation, realRotation, 140 * Time.deltaTime);
+
+    }
+
     public void Input(int input)
     {
         audio.Play();
@@ -131,15 +149,15 @@ public class ChooseWhatToPlant : MonoBehaviour
         switch (choose)
         {
             case 0:
-                camera.position = wheatSquarePosition;
-                camera.rotation = wheatSquareRotation;
+                realPosition = wheatSquarePosition;
+                realRotation = wheatSquareRotation;
                 btnWheat.GetComponent<Graphic>().color = Color.red;
                 break;
             case 1:
                 if (chickenOpen)
                 {
-                    camera.position = chickenSquarePosition;
-                    camera.rotation = chickenSquareRotation;
+                    realPosition = chickenSquarePosition;
+                    realRotation = chickenSquareRotation;
                     btnChicken.GetComponent<Graphic>().color = Color.red;
                 }
                 else
@@ -149,8 +167,8 @@ public class ChooseWhatToPlant : MonoBehaviour
             case 2:
                 if (cowOpen)
                 {
-                    camera.position = cowSquarePosition;
-                    camera.rotation = cowSquareRotation;
+                    realPosition = cowSquarePosition;
+                    realRotation = cowSquareRotation;
                     btnCow.GetComponent<Graphic>().color = Color.red;
                 }
                 else
@@ -185,8 +203,6 @@ public class ChooseWhatToPlant : MonoBehaviour
         else
         {
             panel4.SetActive(true);
-
-
         }
 
         txtMoney.text = money.ToString();
