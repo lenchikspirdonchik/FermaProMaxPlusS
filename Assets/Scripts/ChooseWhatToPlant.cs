@@ -197,8 +197,8 @@ public class ChooseWhatToPlant : MonoBehaviour
                     break;
             }
 
-            camera.position = position;
-            camera.rotation = rotation;
+            realPosition = position;
+            realRotation = rotation;
         }
         else
         {

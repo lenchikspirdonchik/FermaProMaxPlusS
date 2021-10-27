@@ -318,3 +318,24 @@ public class Save
     public int whatIsActive = 0, chickenEgg, cowMilk;
     public bool isReady;
 }
+
+/* private void robSquare()
+    {
+        if (transform.childCount == 1)
+        {
+            Random rnd = new Random();
+            Thread t = new Thread(() =>
+            {
+                int chislo = rnd.Next(0, 20000);
+                if (chislo == 9999)
+                {
+                    UnityThread.executeInUpdate(() =>
+                    {
+                        Delete();
+                        robPanel.SetActive(true);
+                    });
+                }
+            });
+            t.Start();
+        }
+    }*/
