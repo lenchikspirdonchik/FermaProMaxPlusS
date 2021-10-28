@@ -28941,7 +28941,7 @@ IL_005d:
 		NullCheck(L_29);
 		NullCheck(L_28);
 		int32_t L_30;
-		L_30 = VirtFuncInvoker1< int32_t, int32_t >::Invoke(5 /* System.Int32 System.Random::Next(System.Int32) */, L_28, ((int32_t)((int32_t)(((RuntimeArray*)L_29)->max_length))));
+		L_30 = VirtFuncInvoker1< int32_t, int32_t >::Invoke(6 /* System.Int32 System.Random::Next(System.Int32) */, L_28, ((int32_t)((int32_t)(((RuntimeArray*)L_29)->max_length))));
 		V_3 = L_30;
 		WorkStealingQueueU5BU5D_t0A012EBE228687C2D6BB90870F783BA69EEFBD8C* L_31 = V_2;
 		NullCheck(L_31);

@@ -1266,6 +1266,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Quaternion_Lerp_Injected();
 		Register_UnityEngine_Quaternion_Lerp_Injected();
 
+		//System.Void UnityEngine.Quaternion::SlerpUnclamped_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)
+		void Register_UnityEngine_Quaternion_SlerpUnclamped_Injected();
+		Register_UnityEngine_Quaternion_SlerpUnclamped_Injected();
+
 	//End Registrations for type : UnityEngine.Quaternion
 
 	//Start Registrations for type : UnityEngine.Random

@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = System.Random;
 
 public class CreateSquare : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class CreateSquare : MonoBehaviour
     public int activeSquare;
 
     private int whatIsActive = 3, chickenEgg = 0, cowMilk = 0;
-    private bool isReady = false;
+    private bool isReady;
     private Save save = new Save();
     private string path;
     private float lastClick = 0;
@@ -39,25 +38,29 @@ public class CreateSquare : MonoBehaviour
             cowMilk = save.cowMilk;
             isReady = save.isReady;
 
-            if (transform.childCount == 0)
+
+            var position = transform.position;
+            Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
+            switch (whatIsActive)
             {
-                var position = transform.position;
-                Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-                switch (whatIsActive)
-                {
-                    case 0:
-                        Instantiate(wheat, vector3, Quaternion.identity, transform);
-                        PlantWheat();
-                        break;
-                    case 1:
-                        Instantiate(chicken, vector3, Quaternion.identity, transform);
-                        PlantChicken();
-                        break;
-                    case 2:
-                        Instantiate(cow, vector3, Quaternion.identity, transform);
-                        PlantCow();
-                        break;
-                }
+                case 0:
+                    Instantiate(wheat, vector3, Quaternion.identity, transform);
+                    if (isReady)
+                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    else PlantWheat();
+                    break;
+                case 1:
+                    Instantiate(chicken, vector3, Quaternion.identity, transform);
+                    if (isReady)
+                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    else PlantChicken();
+                    break;
+                case 2:
+                    Instantiate(cow, vector3, Quaternion.identity, transform);
+                    if (isReady)
+                        GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    else PlantCow();
+                    break;
             }
         }
     }
@@ -68,11 +71,8 @@ public class CreateSquare : MonoBehaviour
         downTime = Time.time;
         isHandled = false;
 
-        if (Time.time - lastClick < 0.3)
-        {
-            //double clicked the target
-        }
-
+        //if (Time.time - lastClick < 0.3) double clicked the target
+        
         lastClick = Time.time;
         if (isReady) Get();
         else
@@ -88,9 +88,6 @@ public class CreateSquare : MonoBehaviour
                 case 2:
                     Add(cow);
                     break;
-                default:
-                    Add(wheat);
-                    break;
             }
         }
     }
@@ -104,51 +101,35 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
-    private void robSquare()
-    {
-        if (transform.childCount == 1)
-        {
-            Random rnd = new Random();
-            int chislo = rnd.Next(0, 500);
-            if (chislo == 0)
-                Delete();
-        }
-    }
-
     private void Get()
     {
-        if (isReady)
+        GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
+
+        if (activeSquare == 0)
         {
-            GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
-
-            if (activeSquare == 0)
-            {
-                var counter = int.Parse(txtWheat.text);
-                counter++;
-                txtWheat.text = counter.ToString();
-                PlantWheat();
-            }
-
-            if (activeSquare == 1)
-            {
-                var counter = int.Parse(txtChicken.text);
-                counter += chickenEgg;
-                chickenEgg = 0;
-                txtChicken.text = counter.ToString();
-                PlantChicken();
-            }
-
-            if (activeSquare == 2)
-            {
-                var counter = int.Parse(txtCow.text);
-                counter += cowMilk;
-                cowMilk = 0;
-                txtCow.text = counter.ToString();
-                PlantCow();
-            }
-
-            isReady = false;
+            var counter = int.Parse(txtWheat.text);
+            counter++;
+            txtWheat.text = counter.ToString();
+            PlantWheat();
         }
+
+        if (activeSquare == 1)
+        {
+            var counter = int.Parse(txtChicken.text);
+            counter++;
+            txtChicken.text = counter.ToString();
+            PlantChicken();
+        }
+
+        if (activeSquare == 2)
+        {
+            var counter = int.Parse(txtCow.text);
+            counter++;
+            txtCow.text = counter.ToString();
+            PlantCow();
+        }
+
+        isReady = false;
     }
 
     private void Delete()
@@ -171,24 +152,24 @@ public class CreateSquare : MonoBehaviour
         {
             var position = transform.position;
             Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-            if (activeSquare == 0 && money > 0)
+            if (activeSquare == 0 && money > 1)
             {
-                money--;
+                money -= 2;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
                 PlantWheat();
             }
 
-            if (activeSquare == 1 && money > 1 && wheatCount > 2)
+            if (activeSquare == 1 && money > 2 && wheatCount > 2)
             {
-                money -= 2;
+                money -= 3;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
                 audioChicken.Play();
                 PlantChicken();
             }
 
-            if (activeSquare == 2 && money > 2 && wheatCount > 3)
+            if (activeSquare == 2 && money > 3 && wheatCount > 3)
             {
-                money -= 3;
+                money -= 4;
                 Instantiate(obj, vector3, Quaternion.identity, transform);
                 audioCow.Play();
                 PlantCow();
@@ -252,13 +233,14 @@ public class CreateSquare : MonoBehaviour
                 {
                     counter--;
                     txtWheat.text = counter.ToString();
+                    chickenEgg = 0;
                 }
             });
 
             Thread.Sleep(30000);
 
 
-            if (activeSquare == 1 && counter > 1)
+            if (activeSquare == 1)
             {
                 isReady = true;
                 chickenEgg++;

@@ -457,6 +457,8 @@ struct GameObject_tC000A2E1A7CF1E10FD7BA08863287C072207C319;
 struct GenericStack_tFE88EF4FAC2E3519951AC2A4D721C3BD1A02E24C;
 // UnityEngine.Gradient
 struct Gradient_t297BAC6722F67728862AE2FBE760A400DA8902F2;
+// UnityEngine.HeaderAttribute
+struct HeaderAttribute_t9B431E6BA0524D46406D9C413D6A71CB5F2DD1AB;
 // UnityEngine.HideInInspector
 struct HideInInspector_tDD5B9D3AD8D48C93E23FE6CA3ECDA5589D60CCDA;
 // System.IAsyncResult
@@ -7618,6 +7620,25 @@ public:
 	inline void set_value___2(int32_t value)
 	{
 		___value___2 = value;
+	}
+};
+
+
+// UnityEngine.HeaderAttribute
+struct HeaderAttribute_t9B431E6BA0524D46406D9C413D6A71CB5F2DD1AB  : public PropertyAttribute_t4A352471DF625C56C811E27AC86B7E1CE6444052
+{
+public:
+	// System.String UnityEngine.HeaderAttribute::header
+	String_t* ___header_0;
+
+public:
+	inline static int32_t get_offset_of_header_0() { return static_cast<int32_t>(offsetof(HeaderAttribute_t9B431E6BA0524D46406D9C413D6A71CB5F2DD1AB, ___header_0)); }
+	inline String_t* get_header_0() const { return ___header_0; }
+	inline String_t** get_address_of_header_0() { return &___header_0; }
+	inline void set_header_0(String_t* value)
+	{
+		___header_0 = value;
+		Il2CppCodeGenWriteBarrier((void**)(&___header_0), (void*)value);
 	}
 };
 
@@ -14951,6 +14972,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t GraphicsFormatUtility_GetGraphicsForm
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t QualitySettings_get_activeColorSpace_m65BE7300D1A12D2981B492329B32673199CCE7F4 (const RuntimeMethod* method);
 // UnityEngine.Experimental.Rendering.GraphicsFormat UnityEngine.Experimental.Rendering.GraphicsFormatUtility::GetGraphicsFormat(UnityEngine.RenderTextureFormat,System.Boolean)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t GraphicsFormatUtility_GetGraphicsFormat_mD73B7F075511D7D392D55B146711F19A76E5AF1C (int32_t ___format0, bool ___isSRGB1, const RuntimeMethod* method);
+// System.Void UnityEngine.PropertyAttribute::.ctor()
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PropertyAttribute__ctor_mA13181D93341AEAE429F0615989CB4647F2EB8A7 (PropertyAttribute_t4A352471DF625C56C811E27AC86B7E1CE6444052 * __this, const RuntimeMethod* method);
 // System.Delegate System.Delegate::Combine(System.Delegate,System.Delegate)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Delegate_t * Delegate_Combine_m631D10D6CFF81AB4F237B9D549B235A54F45FA55 (Delegate_t * ___a0, Delegate_t * ___b1, const RuntimeMethod* method);
 // System.Delegate System.Delegate::Remove(System.Delegate,System.Delegate)
@@ -15781,6 +15804,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ConnectionChangeEvent__ctor_m95EBD8B5EA1
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* PlayerLoopSystem_ToString_mAC7EE13A5561966294881362AD59CB55DBBED9EE (PlayerLoopSystem_t3C4FAE5D2149A8DBB8BED0C2AE9B957B7830E54C * __this, const RuntimeMethod* method);
 // System.Void UnityEngine.Quaternion::Inverse_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_Inverse_Injected_m709B75EDEB9B03431C31D5D5A100237FAB9F34D6 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___rotation0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___ret1, const RuntimeMethod* method);
+// System.Void UnityEngine.Quaternion::SlerpUnclamped_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___b1, float ___t2, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___ret3, const RuntimeMethod* method);
 // System.Void UnityEngine.Quaternion::Lerp_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_Lerp_Injected_mC13D1CCC7F95173A3FE1F14ADA28444342B51567 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___b1, float ___t2, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___ret3, const RuntimeMethod* method);
 // System.Void UnityEngine.Quaternion::Internal_FromEulerRad_Injected(UnityEngine.Vector3&,UnityEngine.Quaternion&)
@@ -15795,6 +15820,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Quaternion_Dot_m7F12C5843352AB2EA687923
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Quaternion_IsEqualUsingDot_mC57C44978B13AD1592750B1D523AAB4549BD5643 (float ___dot0, const RuntimeMethod* method);
 // System.Boolean UnityEngine.Quaternion::op_Equality(UnityEngine.Quaternion,UnityEngine.Quaternion)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Quaternion_op_Equality_m7EC909C253064DBECF7DB83BCF7C2E42163685BE (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___lhs0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___rhs1, const RuntimeMethod* method);
+// System.Single UnityEngine.Mathf::Min(System.Single,System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Mathf_Min_mD28BD5C9012619B74E475F204F96603193E99B14 (float ___a0, float ___b1, const RuntimeMethod* method);
 // UnityEngine.Vector3 UnityEngine.Quaternion::Internal_ToEulerRad(UnityEngine.Quaternion)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90D65E  Quaternion_Internal_ToEulerRad_m442827358B6C9EB81ADCC01F316AA2201453001E (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___rotation0, const RuntimeMethod* method);
 // UnityEngine.Vector3 UnityEngine.Quaternion::Internal_MakePositive(UnityEngine.Vector3)
@@ -15805,6 +15832,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m57495F692C6CE1CEF278CAD9A98221165D37E636_inline (Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90D65E * __this, float ___x0, float ___y1, float ___z2, const RuntimeMethod* method);
 // UnityEngine.Quaternion UnityEngine.Quaternion::Internal_FromEulerRad(UnityEngine.Vector3)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  Quaternion_Internal_FromEulerRad_m3D0312F9F199A8ADD7463C450B24081061C884A7 (Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90D65E  ___euler0, const RuntimeMethod* method);
+// System.Single UnityEngine.Quaternion::Angle(UnityEngine.Quaternion,UnityEngine.Quaternion)
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Quaternion_Angle_m3BE44E43965BB9EDFD06DBC1E0985324A83327CF_inline (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, const RuntimeMethod* method);
+// UnityEngine.Quaternion UnityEngine.Quaternion::SlerpUnclamped(UnityEngine.Quaternion,UnityEngine.Quaternion,System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  Quaternion_SlerpUnclamped_m654DA9A5B418C2E18B2794BC0CE92E52DF96151F (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, float ___t2, const RuntimeMethod* method);
 // System.Int32 UnityEngine.Quaternion::GetHashCode()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Quaternion_GetHashCode_mFCEA4CA542544DC9BD222C66F524C2F3CFE60744 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * __this, const RuntimeMethod* method);
 // System.Boolean UnityEngine.Quaternion::Equals(UnityEngine.Quaternion)
@@ -15817,8 +15848,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Quaternion_ToString_mF10FE18AAC385F
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Quaternion_ToString_mD3D4C66907C994D30D99E76063623F7000F6998E (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * __this, const RuntimeMethod* method);
 // System.Int32 UnityEngine.Random::RandomRangeInt(System.Int32,System.Int32)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Random_RandomRangeInt_mC1A726071BB9634DCA04EF5DCC1E59360CE392DE (int32_t ___minInclusive0, int32_t ___maxExclusive1, const RuntimeMethod* method);
-// System.Void UnityEngine.PropertyAttribute::.ctor()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PropertyAttribute__ctor_mA13181D93341AEAE429F0615989CB4647F2EB8A7 (PropertyAttribute_t4A352471DF625C56C811E27AC86B7E1CE6444052 * __this, const RuntimeMethod* method);
 // System.Int32 UnityEngine.RangeInt::get_end()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t RangeInt_get_end_m6F8F3C6EA01F7A99BF3A094827F5A0D612AA179E (RangeInt_tD575E0CF6A8D8C85F3AEF8898C72E4DD71E2E05A * __this, const RuntimeMethod* method);
 // System.Void UnityEngine.RangeInt::.ctor(System.Int32,System.Int32)
@@ -16084,8 +16113,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t GraphicsFormatUtility_GetGraphicsForm
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t SystemInfo_GetCompatibleFormat_m02B5C5B1F3836661A92F3C83E44B66729C03B228 (int32_t ___format0, int32_t ___usage1, const RuntimeMethod* method);
 // System.Void UnityEngine.Debug::LogWarning(System.Object)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_LogWarning_m24085D883C9E74D7AB423F0625E13259923960E7 (RuntimeObject * ___message0, const RuntimeMethod* method);
-// System.Single UnityEngine.Mathf::Min(System.Single,System.Single)
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Mathf_Min_mD28BD5C9012619B74E475F204F96603193E99B14 (float ___a0, float ___b1, const RuntimeMethod* method);
 // System.Void System.ThrowHelper::ThrowArgumentOutOfRangeException()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ThrowHelper_ThrowArgumentOutOfRangeException_m4841366ABC2B2AFA37C10900551D7E07522C0929 (const RuntimeMethod* method);
 #ifdef __clang__
@@ -25169,6 +25196,24 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool GraphicsSettings_get_lightsUseLinearInte
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
+// System.Void UnityEngine.HeaderAttribute::.ctor(System.String)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void HeaderAttribute__ctor_m601319E0BCE8C44A9E79B2C0ABAAD0FEF46A9F1E (HeaderAttribute_t9B431E6BA0524D46406D9C413D6A71CB5F2DD1AB * __this, String_t* ___header0, const RuntimeMethod* method)
+{
+	{
+		PropertyAttribute__ctor_mA13181D93341AEAE429F0615989CB4647F2EB8A7(__this, /*hidden argument*/NULL);
+		String_t* L_0 = ___header0;
+		__this->set_header_0(L_0);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
@@ -29252,6 +29297,31 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Mathf_Tan_mC7E6A6883BF16BBF77F15A1A0C35
 		IL2CPP_RUNTIME_CLASS_INIT(Math_tA269614262430118C9FC5C4D9EF4F61C812568F0_il2cpp_TypeInfo_var);
 		double L_1;
 		L_1 = tan(((double)((double)L_0)));
+		V_0 = ((float)((float)L_1));
+		goto IL_000c;
+	}
+
+IL_000c:
+	{
+		float L_2 = V_0;
+		return L_2;
+	}
+}
+// System.Single UnityEngine.Mathf::Acos(System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Mathf_Acos_m199FA3A1E39D8E025CAC43BD3AF8BEE56027393C (float ___f0, const RuntimeMethod* method)
+{
+	static bool s_Il2CppMethodInitialized;
+	if (!s_Il2CppMethodInitialized)
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Math_tA269614262430118C9FC5C4D9EF4F61C812568F0_il2cpp_TypeInfo_var);
+		s_Il2CppMethodInitialized = true;
+	}
+	float V_0 = 0.0f;
+	{
+		float L_0 = ___f0;
+		IL2CPP_RUNTIME_CLASS_INIT(Math_tA269614262430118C9FC5C4D9EF4F61C812568F0_il2cpp_TypeInfo_var);
+		double L_1;
+		L_1 = acos(((double)((double)L_0)));
 		V_0 = ((float)((float)L_1));
 		goto IL_000c;
 	}
@@ -38427,6 +38497,18 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C5
 		return L_0;
 	}
 }
+// UnityEngine.Quaternion UnityEngine.Quaternion::SlerpUnclamped(UnityEngine.Quaternion,UnityEngine.Quaternion,System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  Quaternion_SlerpUnclamped_m654DA9A5B418C2E18B2794BC0CE92E52DF96151F (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, float ___t2, const RuntimeMethod* method)
+{
+	Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	{
+		float L_0 = ___t2;
+		Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0((Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *)(&___a0), (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *)(&___b1), L_0, (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *)(&V_0), /*hidden argument*/NULL);
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_1 = V_0;
+		return L_1;
+	}
+}
 // UnityEngine.Quaternion UnityEngine.Quaternion::Lerp(UnityEngine.Quaternion,UnityEngine.Quaternion,System.Single)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  Quaternion_Lerp_mBFA4C4D2574C8140AA840273D3E6565D66F6F261 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, float ___t2, const RuntimeMethod* method)
 {
@@ -38790,6 +38872,55 @@ IL_003b:
 		return L_16;
 	}
 }
+// System.Single UnityEngine.Quaternion::Angle(UnityEngine.Quaternion,UnityEngine.Quaternion)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Quaternion_Angle_m3BE44E43965BB9EDFD06DBC1E0985324A83327CF (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, const RuntimeMethod* method)
+{
+	float V_0 = 0.0f;
+	float V_1 = 0.0f;
+	float G_B3_0 = 0.0f;
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_0 = ___a0;
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_1 = ___b1;
+		float L_2;
+		L_2 = Quaternion_Dot_m7F12C5843352AB2EA687923444CC987D51515F9A(L_0, L_1, /*hidden argument*/NULL);
+		V_0 = L_2;
+		float L_3 = V_0;
+		bool L_4;
+		L_4 = Quaternion_IsEqualUsingDot_mC57C44978B13AD1592750B1D523AAB4549BD5643(L_3, /*hidden argument*/NULL);
+		if (L_4)
+		{
+			goto IL_0034;
+		}
+	}
+	{
+		float L_5 = V_0;
+		float L_6;
+		L_6 = fabsf(L_5);
+		float L_7;
+		L_7 = Mathf_Min_mD28BD5C9012619B74E475F204F96603193E99B14(L_6, (1.0f), /*hidden argument*/NULL);
+		float L_8;
+		L_8 = acosf(L_7);
+		G_B3_0 = ((float)il2cpp_codegen_multiply((float)((float)il2cpp_codegen_multiply((float)L_8, (float)(2.0f))), (float)(57.2957802f)));
+		goto IL_0039;
+	}
+
+IL_0034:
+	{
+		G_B3_0 = (0.0f);
+	}
+
+IL_0039:
+	{
+		V_1 = G_B3_0;
+		goto IL_003c;
+	}
+
+IL_003c:
+	{
+		float L_9 = V_1;
+		return L_9;
+	}
+}
 // UnityEngine.Vector3 UnityEngine.Quaternion::Internal_MakePositive(UnityEngine.Vector3)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90D65E  Quaternion_Internal_MakePositive_mD0A2B4D1439FC9AC4B487C2392836C8436323857 (Vector3_t65B972D6A585A0A5B63153CF1177A90D3C90D65E  ___euler0, const RuntimeMethod* method)
 {
@@ -39011,6 +39142,53 @@ IL_0014:
 	{
 		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_3 = V_0;
 		return L_3;
+	}
+}
+// UnityEngine.Quaternion UnityEngine.Quaternion::RotateTowards(UnityEngine.Quaternion,UnityEngine.Quaternion,System.Single)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  Quaternion_RotateTowards_mE536473CFE4F8C16245C57C467B95882BE8CF5DC (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___from0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___to1, float ___maxDegreesDelta2, const RuntimeMethod* method)
+{
+	float V_0 = 0.0f;
+	bool V_1 = false;
+	Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_0 = ___from0;
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_1 = ___to1;
+		float L_2;
+		L_2 = Quaternion_Angle_m3BE44E43965BB9EDFD06DBC1E0985324A83327CF_inline(L_0, L_1, /*hidden argument*/NULL);
+		V_0 = L_2;
+		float L_3 = V_0;
+		V_1 = (bool)((((float)L_3) == ((float)(0.0f)))? 1 : 0);
+		bool L_4 = V_1;
+		if (!L_4)
+		{
+			goto IL_0019;
+		}
+	}
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_5 = ___to1;
+		V_2 = L_5;
+		goto IL_0030;
+	}
+
+IL_0019:
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_6 = ___from0;
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_7 = ___to1;
+		float L_8 = ___maxDegreesDelta2;
+		float L_9 = V_0;
+		float L_10;
+		L_10 = Mathf_Min_mD28BD5C9012619B74E475F204F96603193E99B14((1.0f), ((float)((float)L_8/(float)L_9)), /*hidden argument*/NULL);
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_11;
+		L_11 = Quaternion_SlerpUnclamped_m654DA9A5B418C2E18B2794BC0CE92E52DF96151F(L_6, L_7, L_10, /*hidden argument*/NULL);
+		V_2 = L_11;
+		goto IL_0030;
+	}
+
+IL_0030:
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_12 = V_2;
+		return L_12;
 	}
 }
 // System.Int32 UnityEngine.Quaternion::GetHashCode()
@@ -39318,6 +39496,15 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_Inverse_Injected_m709B75EDEB9
 	if (!_il2cpp_icall_func)
 	_il2cpp_icall_func = (Quaternion_Inverse_Injected_m709B75EDEB9B03431C31D5D5A100237FAB9F34D6_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Quaternion::Inverse_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&)");
 	_il2cpp_icall_func(___rotation0, ___ret1);
+}
+// System.Void UnityEngine.Quaternion::SlerpUnclamped_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___b1, float ___t2, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___ret3, const RuntimeMethod* method)
+{
+	typedef void (*Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0_ftn) (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *, float, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 *);
+	static Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Quaternion_SlerpUnclamped_Injected_m74BEDC4026D6E4BA445269B0156A7F6C45F730F0_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Quaternion::SlerpUnclamped_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)");
+	_il2cpp_icall_func(___a0, ___b1, ___t2, ___ret3);
 }
 // System.Void UnityEngine.Quaternion::Lerp_Injected(UnityEngine.Quaternion&,UnityEngine.Quaternion&,System.Single,UnityEngine.Quaternion&)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Quaternion_Lerp_Injected_mC13D1CCC7F95173A3FE1F14ADA28444342B51567 (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___b1, float ___t2, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4 * ___ret3, const RuntimeMethod* method)
@@ -44224,6 +44411,54 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m57495F692C6CE
 		float L_2 = ___z2;
 		__this->set_z_4(L_2);
 		return;
+	}
+}
+IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR float Quaternion_Angle_m3BE44E43965BB9EDFD06DBC1E0985324A83327CF_inline (Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___a0, Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  ___b1, const RuntimeMethod* method)
+{
+	float V_0 = 0.0f;
+	float V_1 = 0.0f;
+	float G_B3_0 = 0.0f;
+	{
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_0 = ___a0;
+		Quaternion_t6D28618CF65156D4A0AD747370DDFD0C514A31B4  L_1 = ___b1;
+		float L_2;
+		L_2 = Quaternion_Dot_m7F12C5843352AB2EA687923444CC987D51515F9A(L_0, L_1, /*hidden argument*/NULL);
+		V_0 = L_2;
+		float L_3 = V_0;
+		bool L_4;
+		L_4 = Quaternion_IsEqualUsingDot_mC57C44978B13AD1592750B1D523AAB4549BD5643(L_3, /*hidden argument*/NULL);
+		if (L_4)
+		{
+			goto IL_0034;
+		}
+	}
+	{
+		float L_5 = V_0;
+		float L_6;
+		L_6 = fabsf(L_5);
+		float L_7;
+		L_7 = Mathf_Min_mD28BD5C9012619B74E475F204F96603193E99B14(L_6, (1.0f), /*hidden argument*/NULL);
+		float L_8;
+		L_8 = acosf(L_7);
+		G_B3_0 = ((float)il2cpp_codegen_multiply((float)((float)il2cpp_codegen_multiply((float)L_8, (float)(2.0f))), (float)(57.2957802f)));
+		goto IL_0039;
+	}
+
+IL_0034:
+	{
+		G_B3_0 = (0.0f);
+	}
+
+IL_0039:
+	{
+		V_1 = G_B3_0;
+		goto IL_003c;
+	}
+
+IL_003c:
+	{
+		float L_9 = V_1;
+		return L_9;
 	}
 }
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector2_tBB32F2736AEC229A7BFBCE18197EC0F6AC7EC2D9  Vector2_Scale_m54AA203304585B8BB6ECA4936A90F408BD880916_inline (Vector2_tBB32F2736AEC229A7BFBCE18197EC0F6AC7EC2D9  ___a0, Vector2_tBB32F2736AEC229A7BFBCE18197EC0F6AC7EC2D9  ___b1, const RuntimeMethod* method)

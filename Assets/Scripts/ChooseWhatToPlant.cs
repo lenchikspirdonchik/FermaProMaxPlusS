@@ -118,13 +118,13 @@ public class ChooseWhatToPlant : MonoBehaviour
         switch (txt.name)
         {
             case "txtWheat":
-                money += 2 * product;
+                money += 1 * product;
                 break;
             case "txtChicken":
-                money += 3 * product;
+                money += 2 * product;
                 break;
             case "txtCow":
-                money += 4 * product;
+                money += 3 * product;
                 break;
         }
 
