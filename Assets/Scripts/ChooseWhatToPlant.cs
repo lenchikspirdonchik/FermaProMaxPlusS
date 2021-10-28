@@ -1,13 +1,15 @@
 using System;
 using System.IO;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class ChooseWhatToPlant : MonoBehaviour
 {
     [Header("Game objects")] [Tooltip("Help panels")]
-    public GameObject panel1, panel2, panel3, panel4;
+    public GameObject panel1, panel2, panel3, panel4, panelRob;
 
     [Tooltip("is chicken or cow squares are open")]
     public bool chickenOpen, cowOpen;
@@ -67,6 +69,13 @@ public class ChooseWhatToPlant : MonoBehaviour
         realRotation = wheatSquareRotation;
     }
 
+    private void FixedUpdate()
+    {
+        camera.transform.position = Vector3.Lerp(camera.transform.position, realPosition, Time.deltaTime * 5);
+        camera.transform.rotation =
+            Quaternion.RotateTowards(camera.transform.rotation, realRotation, 140 * Time.deltaTime);
+        robSquare();
+    }
 
     public void Exit(String gameLevel)
     {
@@ -79,6 +88,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         panel2.SetActive(false);
         panel3.SetActive(false);
         panel4.SetActive(false);
+        panelRob.SetActive(false);
     }
 
     public void Sell(Text txt)
@@ -131,13 +141,6 @@ public class ChooseWhatToPlant : MonoBehaviour
         return money;
     }
 
-    private void FixedUpdate()
-    {
-        camera.transform.position = Vector3.Lerp(camera.transform.position, realPosition, Time.deltaTime * 5);
-        camera.transform.rotation =
-            Quaternion.RotateTowards(camera.transform.rotation, realRotation, 140 * Time.deltaTime);
-
-    }
 
     public void Input(int input)
     {
@@ -176,6 +179,39 @@ public class ChooseWhatToPlant : MonoBehaviour
 
                 break;
         }
+    }
+
+    private void robSquare()
+    {
+        Random rnd = new Random();
+        Thread t = new Thread(() =>
+        {
+            int chislo = rnd.Next(0, 20000);
+            if (chislo == 19)
+            {
+                UnityThread.executeInUpdate(() =>
+                {
+                    panelRob.SetActive(true);
+                    chislo = rnd.Next(0, 3);
+                    switch (chislo)
+                    {
+                        case 0:
+                            txtWheat.text = "0";
+                            break;
+                        case 1:
+                            txtChicken.text = "0";
+                            break;
+                        case 2:
+                            txtCow.text = "0";
+                            break;
+                        case 3:
+                            txtMoney.text = "0";
+                            break;
+                    }
+                });
+            }
+        });
+        t.Start();
     }
 
     private void BuySquare(int price, Vector3 position, Quaternion rotation)
