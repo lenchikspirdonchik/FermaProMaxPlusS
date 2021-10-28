@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -67,6 +66,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         cowSquareRotation = Quaternion.Euler(31.614f, -44.887f, 0f);
         realPosition = wheatSquarePosition;
         realRotation = wheatSquareRotation;
+        service();
     }
 
     private void FixedUpdate()
@@ -181,12 +181,43 @@ public class ChooseWhatToPlant : MonoBehaviour
         }
     }
 
+    private void service()
+    {
+        Thread thread = new Thread(() =>
+        {
+            while (true)
+            {
+                Thread.Sleep(45000);
+                UnityThread.executeInUpdate(() =>
+                {
+                    var money = int.Parse(txtMoney.text);
+
+                    if (money > 0)
+                    {
+                        money = (int)(money * 0.87);
+                    }
+                    else if (money == 0)
+                    {
+                        money = -13;
+                    }
+                    else
+                    {
+                        money = (int)(money / 0.87);
+                    }
+
+                    txtMoney.text = money.ToString();
+                });
+            }
+        });
+        thread.Start();
+    }
+
     private void robSquare()
     {
         Random rnd = new Random();
         Thread t = new Thread(() =>
         {
-            int chislo = rnd.Next(0, 20000);
+            int chislo = rnd.Next(0, 25000);
             if (chislo == 19)
             {
                 UnityThread.executeInUpdate(() =>
