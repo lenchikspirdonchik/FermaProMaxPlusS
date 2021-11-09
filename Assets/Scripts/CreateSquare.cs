@@ -1,8 +1,11 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
+using Random = System.Random;
 
 public class CreateSquare : MonoBehaviour
 {
@@ -19,6 +22,7 @@ public class CreateSquare : MonoBehaviour
     private float waitTime = 1.0f;
     private float downTime;
     private bool isHandled = false;
+    private int chanceDrought = 1, chanceCombine = 2, chanceBird = 5000, chanceBadGood = 3, chanceWolf = 3000;
 
 
     private void Start()
@@ -63,16 +67,32 @@ public class CreateSquare : MonoBehaviour
                     break;
             }
         }
+        isObjectDelete();
     }
+    
 
+    private void isObjectDelete()
+    {
+        while (true)
+        {
+            if (transform.childCount == 0)
+            {
+                isReady = false;
+                whatIsActive = 3;
+                
+            }
 
+            Thread t = new Thread(() => { Thread.Sleep(5000); });
+                t.Start();
+        }
+    }
     void OnMouseDown()
     {
         downTime = Time.time;
         isHandled = false;
 
         //if (Time.time - lastClick < 0.3) double clicked the target
-        
+
         lastClick = Time.time;
         if (isReady) Get();
         else
@@ -104,35 +124,37 @@ public class CreateSquare : MonoBehaviour
     private void Get()
     {
         GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
-
-        if (activeSquare == 0)
+        if (transform.childCount != 0)
         {
-            var counter = int.Parse(txtWheat.text);
-            counter++;
-            txtWheat.text = counter.ToString();
-            PlantWheat();
-        }
+            if (activeSquare == 0)
+            {
+                var counter = int.Parse(txtWheat.text);
+                counter++;
+                txtWheat.text = counter.ToString();
+                PlantWheat();
+            }
 
-        if (activeSquare == 1)
-        {
-            var counter = int.Parse(txtChicken.text);
-            counter++;
-            txtChicken.text = counter.ToString();
-            PlantChicken();
-        }
+            if (activeSquare == 1)
+            {
+                var counter = int.Parse(txtChicken.text);
+                counter++;
+                txtChicken.text = counter.ToString();
+                PlantChicken();
+            }
 
-        if (activeSquare == 2)
-        {
-            var counter = int.Parse(txtCow.text);
-            counter++;
-            txtCow.text = counter.ToString();
-            PlantCow();
-        }
+            if (activeSquare == 2)
+            {
+                var counter = int.Parse(txtCow.text);
+                counter++;
+                txtCow.text = counter.ToString();
+                PlantCow();
+            }
 
-        isReady = false;
+            isReady = false;
+        }
     }
 
-    private void Delete()
+    public void Delete()
     {
         foreach (Transform child in transform)
         {
@@ -261,15 +283,15 @@ public class CreateSquare : MonoBehaviour
         Thread t = new Thread(() =>
         {
             Thread.Sleep(20000);
-
-            if (activeSquare == 0)
+            UnityThread.executeInUpdate(() =>
             {
-                isReady = true;
-                UnityThread.executeInUpdate(() =>
+                if (activeSquare == 0)
                 {
+                    isReady = true;
+
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                });
-            }
+                }
+            });
         });
         t.Start();
     }

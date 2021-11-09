@@ -66,7 +66,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         cowSquareRotation = Quaternion.Euler(31.614f, -44.887f, 0f);
         realPosition = wheatSquarePosition;
         realRotation = wheatSquareRotation;
-        service();
+        
     }
 
     private void FixedUpdate()
@@ -74,7 +74,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         camera.transform.position = Vector3.Lerp(camera.transform.position, realPosition, Time.deltaTime * 5);
         camera.transform.rotation =
             Quaternion.RotateTowards(camera.transform.rotation, realRotation, 140 * Time.deltaTime);
-        robSquare();
+        
     }
 
     public void Exit(String gameLevel)

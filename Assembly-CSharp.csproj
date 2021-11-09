@@ -61,6 +61,8 @@
      <Compile Include="Assets\ImportAssets\Easy Primitive Animals\FarmEdition\Scripts\AnimalController.cs" />
      <Compile Include="Assets\ImportAssets\Easy Primitive Animals\FarmEdition\Scripts\RotateStand.cs" />
      <Compile Include="Assets\Scripts\CreateSquare.cs" />
+     <Compile Include="Assets\Scripts\RobWheat.cs" />
+     <Compile Include="Assets\Scripts\RobChicken.cs" />
      <None Include="Assets\ImportAssets\WavingGrass\Shader\GrassWind.shader" />
      <None Include="Assets\ImportAssets\WavingGrass\readme.txt" />
      <None Include="Assets\ImportAssets\VertexColorFarmAnimals\Shaders\VertexColorUnlit.shader" />
