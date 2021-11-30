@@ -4,22 +4,40 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class RobWheat : MonoBehaviour
 {
-    private int chanceDrought = 1, chanceCombine = 2, chanceBird = 3;
+    private int chance = 5000, chanceDrought = 1;
+    public Text txtmoney, txtWheat;
+    public GameObject panelBadWheat;
+    private SaveRobWheat save = new SaveRobWheat();
+    private string path;
 
     private void Start()
     {
         UnityThread.initUnityThread();
+        String buffPath = "Save_data_RobWheat.json";
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+            path = Path.Combine(Application.persistentDataPath, buffPath);
+#else
+        path = Path.Combine(Application.dataPath, buffPath);
+#endif
+        if (File.Exists(path))
+        {
+            save = JsonUtility.FromJson<SaveRobWheat>(File.ReadAllText(path));
+            if (save.chance > 0)
+                chance = save.chance;
+        }
 
-        Thread thread = new Thread(() =>
+        Thread threadBird = new Thread(() =>
         {
             while (true)
             {
                 Random rnd = new Random();
-                int chislo = rnd.Next(1, 900);
+                int chislo = rnd.Next(1, chance);
 
                 if (chislo == chanceDrought)
                 {
@@ -38,18 +56,62 @@ public class RobWheat : MonoBehaviour
                     Thread.Sleep(100);
                 }
 
-                /* if (chislo == chanceCombine)
-                 {
-                     Debug.Log("Combine! Combine! Combine! Combine!");
-                 }
- 
-                 if (chislo == chanceBird)
-                 {
-                     Debug.Log("Bird! Bird! Bird! Bird!");
-                 }*/
+                Thread.Sleep(10);
+                if (chance > 5000) chance--;
             }
         });
 
-        thread.Start();
+        Thread threadBadWheat = new Thread(() =>
+        {
+            while (true)
+            {
+                Random rnd = new Random();
+                int chislo = rnd.Next(1, 65000);
+
+                if (chislo == 2)
+                {
+                    UnityThread.executeInUpdate(() =>
+                    {
+                        txtWheat.text = "0";
+                        panelBadWheat.SetActive(true);
+                    });
+                    Thread.Sleep(100);
+                }
+
+                Thread.Sleep(2);
+            }
+        });
+
+        threadBird.Start();
+        threadBadWheat.Start();
     }
+
+    public void increaseChance()
+    {
+        int money = int.Parse(txtmoney.text);
+        if (money > 150)
+        {
+            chance += 10000;
+            money -= 100;
+            txtmoney.text = money.ToString();
+        }
+    }
+
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+        private void OnApplicationPause(bool pause)
+        {
+        save.chance = chance;
+        File.WriteAllText(path, JsonUtility.ToJson(save));
+        }
+#endif
+    public void OnApplicationQuit()
+    {
+        save.chance = chance;
+        File.WriteAllText(path, JsonUtility.ToJson(save));
+    }
+}
+
+public class SaveRobWheat
+{
+    public int chance;
 }

@@ -53,16 +53,16 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ChooseWhatToPlant.cs" />
+     <Compile Include="Assets\Scripts\RobChicken.cs" />
      <Compile Include="Assets\Scripts\SC_MainMenu.cs" />
      <Compile Include="Assets\Scripts\UnityThread.cs" />
      <Compile Include="Assets\ImportAssets\WavingGrass\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\SC_BackgroundScaler.cs" />
+     <Compile Include="Assets\Scripts\RobWheat.cs" />
      <Compile Include="Assets\ImportAssets\WavingGrass\Scripts\GrassController.cs" />
      <Compile Include="Assets\ImportAssets\Easy Primitive Animals\FarmEdition\Scripts\AnimalController.cs" />
      <Compile Include="Assets\ImportAssets\Easy Primitive Animals\FarmEdition\Scripts\RotateStand.cs" />
      <Compile Include="Assets\Scripts\CreateSquare.cs" />
-     <Compile Include="Assets\Scripts\RobWheat.cs" />
-     <Compile Include="Assets\Scripts\RobChicken.cs" />
      <None Include="Assets\ImportAssets\WavingGrass\Shader\GrassWind.shader" />
      <None Include="Assets\ImportAssets\WavingGrass\readme.txt" />
      <None Include="Assets\ImportAssets\VertexColorFarmAnimals\Shaders\VertexColorUnlit.shader" />

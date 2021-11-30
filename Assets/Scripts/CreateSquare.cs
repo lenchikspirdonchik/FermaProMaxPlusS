@@ -67,25 +67,18 @@ public class CreateSquare : MonoBehaviour
                     break;
             }
         }
-        isObjectDelete();
     }
-    
 
-    private void isObjectDelete()
+    private void Update()
     {
-        while (true)
+        if (transform.childCount == 0)
         {
-            if (transform.childCount == 0)
-            {
-                isReady = false;
-                whatIsActive = 3;
-                
-            }
-
-            Thread t = new Thread(() => { Thread.Sleep(5000); });
-                t.Start();
+            isReady = false;
+            GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
+            whatIsActive = 3;
         }
     }
+
     void OnMouseDown()
     {
         downTime = Time.time;
