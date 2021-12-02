@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
@@ -66,6 +67,8 @@ public class CreateSquare : MonoBehaviour
                     else PlantCow();
                     break;
             }
+
+            foo();
         }
     }
 
@@ -147,7 +150,7 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
-    public void Delete()
+    private void Delete()
     {
         foreach (Transform child in transform)
         {
@@ -222,6 +225,7 @@ public class CreateSquare : MonoBehaviour
                 UnityThread.executeInUpdate(() =>
                 {
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    foo();
                 });
             }
 
@@ -262,6 +266,7 @@ public class CreateSquare : MonoBehaviour
                 UnityThread.executeInUpdate(() =>
                 {
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    foo();
                 });
             }
 
@@ -283,11 +288,35 @@ public class CreateSquare : MonoBehaviour
                     isReady = true;
 
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
+                    foo();
                 }
             });
         });
         t.Start();
     }
+
+
+    private void foo()
+    {
+        Thread timeAfterReady = new Thread(() =>
+        {
+            int time = 0;
+            while (time < 90)
+            {
+                time++;
+                Thread.Sleep(1000);
+            }
+
+            UnityThread.executeInUpdate(() =>
+            {
+                if (activeSquare != 3 && isReady)
+                    Delete();
+                
+            });
+        });
+        timeAfterReady.Start();
+    }
+
 
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         private void OnApplicationPause(bool pause)

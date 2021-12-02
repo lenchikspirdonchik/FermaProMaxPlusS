@@ -1,18 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Random = System.Random;
 
 public class RobWheat : MonoBehaviour
 {
-    private int chance = 5000, chanceDrought = 1;
+    private int chance = 5000;
     public Text txtmoney, txtWheat;
-    public GameObject panelBadWheat;
+    public GameObject panelBadWheat, panelDrought;
     private SaveRobWheat save = new SaveRobWheat();
     private string path;
 
@@ -39,7 +36,7 @@ public class RobWheat : MonoBehaviour
                 Random rnd = new Random();
                 int chislo = rnd.Next(1, chance);
 
-                if (chislo == chanceDrought)
+                if (chislo == 1)
                 {
                     chislo = rnd.Next(0, 64);
                     UnityThread.executeInUpdate(() =>
@@ -66,7 +63,7 @@ public class RobWheat : MonoBehaviour
             while (true)
             {
                 Random rnd = new Random();
-                int chislo = rnd.Next(1, 65000);
+                int chislo = rnd.Next(1, 55000);
 
                 if (chislo == 2)
                 {
@@ -81,9 +78,43 @@ public class RobWheat : MonoBehaviour
                 Thread.Sleep(2);
             }
         });
+        
+        Thread threadDrought = new Thread(() =>
+        {
+            while (true)
+            {
+                Random rnd = new Random();
+                int chislo = rnd.Next(1, 45000);
+
+                if (chislo == 3)
+                {
+                    UnityThread.executeInUpdate(() =>
+                        {
+                            for (int i = 0; i < 64; i += 3)
+                            {
+                                transform.GetChild(chislo).GetComponent<Renderer>().material.color =
+                                    new Color32(84, 53, 13, 255);
+                                foreach (Transform eachChild in transform.GetChild(i))
+                                {
+                                    if (eachChild.name == "P_AncientRuins_Plants20(Clone)")
+                                        Destroy(eachChild.gameObject);
+                                    panelDrought.SetActive(true);
+                                }
+                            }
+                        });
+                    
+
+                    Thread.Sleep(100);
+                }
+
+                Thread.Sleep(10);
+                if (chance > 5000) chance--;
+            }
+        });
 
         threadBird.Start();
         threadBadWheat.Start();
+        threadDrought.Start();
     }
 
     public void increaseChance()

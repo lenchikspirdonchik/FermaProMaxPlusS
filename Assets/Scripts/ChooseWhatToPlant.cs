@@ -8,7 +8,7 @@ using Random = System.Random;
 public class ChooseWhatToPlant : MonoBehaviour
 {
     [Header("Game objects")] [Tooltip("Help panels")]
-    public GameObject panel1, panel2, panel3, panel4, panelRob;
+    public GameObject panel1, panel2, panel3, panel4,panel5, panelRob;
 
     [Tooltip("is chicken or cow squares are open")]
     public bool chickenOpen, cowOpen;
@@ -88,6 +88,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         panel2.SetActive(false);
         panel3.SetActive(false);
         panel4.SetActive(false);
+        panel5.SetActive(false);
         panelRob.SetActive(false);
     }
 
@@ -181,69 +182,6 @@ public class ChooseWhatToPlant : MonoBehaviour
         }
     }
 
-    private void service()
-    {
-        Thread thread = new Thread(() =>
-        {
-            while (true)
-            {
-                Thread.Sleep(45000);
-                UnityThread.executeInUpdate(() =>
-                {
-                    var money = int.Parse(txtMoney.text);
-
-                    if (money > 0)
-                    {
-                        money = (int)(money * 0.87);
-                    }
-                    else if (money == 0)
-                    {
-                        money = -13;
-                    }
-                    else
-                    {
-                        money = (int)(money / 0.87);
-                    }
-
-                    txtMoney.text = money.ToString();
-                });
-            }
-        });
-        thread.Start();
-    }
-
-    private void robSquare()
-    {
-        Random rnd = new Random();
-        Thread t = new Thread(() =>
-        {
-            int chislo = rnd.Next(0, 25000);
-            if (chislo == 19)
-            {
-                UnityThread.executeInUpdate(() =>
-                {
-                    panelRob.SetActive(true);
-                    chislo = rnd.Next(0, 3);
-                    switch (chislo)
-                    {
-                        case 0:
-                            txtWheat.text = "0";
-                            break;
-                        case 1:
-                            txtChicken.text = "0";
-                            break;
-                        case 2:
-                            txtCow.text = "0";
-                            break;
-                        case 3:
-                            txtMoney.text = "0";
-                            break;
-                    }
-                });
-            }
-        });
-        t.Start();
-    }
 
     private void BuySquare(int price, Vector3 position, Quaternion rotation)
     {
