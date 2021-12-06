@@ -9,7 +9,7 @@ public class RobWheat : MonoBehaviour
 {
     private int chance = 5000;
     public Text txtmoney, txtWheat;
-    public GameObject panelBadWheat, panelDrought;
+    public GameObject panelBadWheat, panelDrought, birdImg;
     private SaveRobWheat save = new SaveRobWheat();
     private string path;
 
@@ -49,8 +49,11 @@ public class RobWheat : MonoBehaviour
 
                                 Destroy(eachChild.gameObject);
                         }
+
+                        birdImg.SetActive(true);
                     });
-                    Thread.Sleep(100);
+                    Thread.Sleep(2000);
+                    UnityThread.executeInUpdate(() => { birdImg.SetActive(false); });
                 }
 
                 Thread.Sleep(10);
@@ -78,7 +81,7 @@ public class RobWheat : MonoBehaviour
                 Thread.Sleep(2);
             }
         });
-        
+
         Thread threadDrought = new Thread(() =>
         {
             while (true)
@@ -89,20 +92,20 @@ public class RobWheat : MonoBehaviour
                 if (chislo == 3)
                 {
                     UnityThread.executeInUpdate(() =>
+                    {
+                        for (int i = 0; i < 64; i += 3)
                         {
-                            for (int i = 0; i < 64; i += 3)
+                            transform.GetChild(chislo).GetComponent<Renderer>().material.color =
+                                new Color32(84, 53, 13, 255);
+                            foreach (Transform eachChild in transform.GetChild(i))
                             {
-                                transform.GetChild(chislo).GetComponent<Renderer>().material.color =
-                                    new Color32(84, 53, 13, 255);
-                                foreach (Transform eachChild in transform.GetChild(i))
-                                {
-                                    if (eachChild.name == "P_AncientRuins_Plants20(Clone)")
-                                        Destroy(eachChild.gameObject);
-                                    panelDrought.SetActive(true);
-                                }
+                                if (eachChild.name == "P_AncientRuins_Plants20(Clone)")
+                                    Destroy(eachChild.gameObject);
+                                panelDrought.SetActive(true);
                             }
-                        });
-                    
+                        }
+                    });
+
 
                     Thread.Sleep(100);
                 }

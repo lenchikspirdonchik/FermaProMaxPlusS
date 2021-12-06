@@ -166,36 +166,35 @@ public class CreateSquare : MonoBehaviour
     {
         int money = int.Parse(txtMoney.text);
         int wheatCount = int.Parse(txtWheat.text);
-        if (transform.childCount == 0)
+        Delete();
+
+        var position = transform.position;
+        Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
+        if (activeSquare == 0 && money > 1)
         {
-            var position = transform.position;
-            Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
-            if (activeSquare == 0 && money > 1)
-            {
-                money -= 2;
-                Instantiate(obj, vector3, Quaternion.identity, transform);
-                PlantWheat();
-            }
-
-            if (activeSquare == 1 && money > 2 && wheatCount > 2)
-            {
-                money -= 3;
-                Instantiate(obj, vector3, Quaternion.identity, transform);
-                audioChicken.Play();
-                PlantChicken();
-            }
-
-            if (activeSquare == 2 && money > 3 && wheatCount > 3)
-            {
-                money -= 4;
-                Instantiate(obj, vector3, Quaternion.identity, transform);
-                audioCow.Play();
-                PlantCow();
-            }
-
-            whatIsActive = activeSquare;
-            txtMoney.text = money.ToString();
+            money -= 2;
+            Instantiate(obj, vector3, Quaternion.identity, transform);
+            PlantWheat();
         }
+
+        if (activeSquare == 1 && money > 2 && wheatCount > 2)
+        {
+            money -= 3;
+            Instantiate(obj, vector3, Quaternion.identity, transform);
+            audioChicken.Play();
+            PlantChicken();
+        }
+
+        if (activeSquare == 2 && money > 3 && wheatCount > 3)
+        {
+            money -= 4;
+            Instantiate(obj, vector3, Quaternion.identity, transform);
+            audioCow.Play();
+            PlantCow();
+        }
+
+        whatIsActive = activeSquare;
+        txtMoney.text = money.ToString();
     }
 
     private void PlantCow()
@@ -304,14 +303,19 @@ public class CreateSquare : MonoBehaviour
             while (time < 90)
             {
                 time++;
-                Thread.Sleep(1000);
+                Thread.Sleep(1001);
+                if (activeSquare == 3 || !isReady)
+                    break;
             }
 
             UnityThread.executeInUpdate(() =>
             {
                 if (activeSquare != 3 && isReady)
-                    Delete();
-                
+                {
+                    Debug.Log("delete foo: transform = " + transform.name);
+                    GetComponent<Renderer>().material.color = new Color32(240, 10, 10, 255);
+                    isReady = false;
+                }
             });
         });
         timeAfterReady.Start();

@@ -8,8 +8,7 @@ using Random = System.Random;
 public class ChooseWhatToPlant : MonoBehaviour
 {
     [Header("Game objects")] [Tooltip("Help panels")]
-    public GameObject panel1, panel2, panel3, panel4,panel5, panelRob;
-
+    public GameObject panel1, panel2, panel3, panel4, panel5, panelRob, panel6;
     [Tooltip("is chicken or cow squares are open")]
     public bool chickenOpen, cowOpen;
 
@@ -56,6 +55,7 @@ public class ChooseWhatToPlant : MonoBehaviour
             panel1.SetActive(true);
             panel2.SetActive(true);
             panel3.SetActive(true);
+            panel6.SetActive(true);
         }
 
         wheatSquarePosition = new Vector3(-4.37f, 6.76f, -8.15f);
@@ -90,6 +90,8 @@ public class ChooseWhatToPlant : MonoBehaviour
         panel4.SetActive(false);
         panel5.SetActive(false);
         panelRob.SetActive(false);
+        panel6.SetActive(false);
+
     }
 
     public void Sell(Text txt)
