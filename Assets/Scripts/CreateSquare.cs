@@ -1,12 +1,8 @@
 using System;
-using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
-using Random = System.Random;
 
 public class CreateSquare : MonoBehaviour
 {
@@ -15,21 +11,22 @@ public class CreateSquare : MonoBehaviour
     public AudioSource audioChicken, audioCow;
     public int activeSquare;
 
-    private int whatIsActive = 3, chickenEgg = 0, cowMilk = 0;
+    private int whatIsActive = 3, chickenEgg, cowMilk;
     private bool isReady;
     private Save save = new Save();
     private string path;
-    private float lastClick = 0;
-    private float waitTime = 1.0f;
+    private float lastClick;
+    private readonly float waitTime = 1.0f;
     private float downTime;
-    private bool isHandled = false;
+    private bool isHandled;
     private int chanceDrought = 1, chanceCombine = 2, chanceBird = 5000, chanceBadGood = 3, chanceWolf = 3000;
 
 
     private void Start()
     {
+        // if we don't start the game from beginning - there must be save files. so let's read them and load the game
         UnityThread.initUnityThread();
-        String buffPath = "Save_" + transform.name + ".json";
+        var buffPath = "Save_" + transform.name + ".json";
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
             path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
@@ -45,7 +42,7 @@ public class CreateSquare : MonoBehaviour
 
 
             var position = transform.position;
-            Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
+            var vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
             switch (whatIsActive)
             {
                 case 0:
@@ -68,10 +65,11 @@ public class CreateSquare : MonoBehaviour
                     break;
             }
 
-            foo();
+            DeleteOldProduct();
         }
     }
 
+    //if we delete wheat in RobWheat.cs we must update this here
     private void Update()
     {
         if (transform.childCount == 0)
@@ -82,7 +80,8 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    // user listener
+    private void OnMouseDown()
     {
         downTime = Time.time;
         isHandled = false;
@@ -92,7 +91,6 @@ public class CreateSquare : MonoBehaviour
         lastClick = Time.time;
         if (isReady) Get();
         else
-        {
             switch (activeSquare)
             {
                 case 0:
@@ -105,18 +103,18 @@ public class CreateSquare : MonoBehaviour
                     Add(cow);
                     break;
             }
-        }
     }
 
-    void OnMouseDrag()
+    private void OnMouseDrag()
     {
-        if ((Time.time > downTime + waitTime) && !isHandled)
+        if (Time.time > downTime + waitTime && !isHandled)
         {
             isHandled = true;
             Delete();
         }
     }
 
+// then product is ready we can collect it here
     private void Get()
     {
         GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
@@ -150,26 +148,25 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
+    // user also can delete product here
     private void Delete()
     {
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
+        foreach (Transform child in transform) Destroy(child.gameObject);
 
         GetComponent<Renderer>().material.color = new Color32(84, 53, 13, 255);
         isReady = false;
         whatIsActive = 3;
     }
 
+    //add new product
     private void Add(GameObject obj)
     {
-        int money = int.Parse(txtMoney.text);
-        int wheatCount = int.Parse(txtWheat.text);
+        var money = int.Parse(txtMoney.text);
+        var wheatCount = int.Parse(txtWheat.text);
         Delete();
 
         var position = transform.position;
-        Vector3 vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
+        var vector3 = new Vector3(position.x, position.y + 0.5f, position.z);
         if (activeSquare == 0 && money > 1)
         {
             money -= 2;
@@ -197,10 +194,13 @@ public class CreateSquare : MonoBehaviour
         txtMoney.text = money.ToString();
     }
 
+
+// plant cow
+// really??? thank you, i can't undestand it
     private void PlantCow()
     {
         var counter = int.Parse(txtWheat.text);
-        Thread t = new Thread(() =>
+        var t = new Thread(() =>
         {
             while (activeSquare != 2 && counter < 3)
             {
@@ -224,7 +224,7 @@ public class CreateSquare : MonoBehaviour
                 UnityThread.executeInUpdate(() =>
                 {
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                    foo();
+                    DeleteOldProduct();
                 });
             }
 
@@ -234,10 +234,11 @@ public class CreateSquare : MonoBehaviour
         t.Start();
     }
 
+// plant chicken
     private void PlantChicken()
     {
         var counter = int.Parse(txtWheat.text);
-        Thread t = new Thread(() =>
+        var t = new Thread(() =>
         {
             while (activeSquare != 1 && counter < 2)
             {
@@ -265,7 +266,7 @@ public class CreateSquare : MonoBehaviour
                 UnityThread.executeInUpdate(() =>
                 {
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                    foo();
+                    DeleteOldProduct();
                 });
             }
 
@@ -275,9 +276,10 @@ public class CreateSquare : MonoBehaviour
         t.Start();
     }
 
+// plant wheat
     private void PlantWheat()
     {
-        Thread t = new Thread(() =>
+        var t = new Thread(() =>
         {
             Thread.Sleep(20000);
             UnityThread.executeInUpdate(() =>
@@ -287,19 +289,19 @@ public class CreateSquare : MonoBehaviour
                     isReady = true;
 
                     GetComponent<Renderer>().material.color = new Color32(194, 124, 0, 255);
-                    foo();
+                    DeleteOldProduct();
                 }
             });
         });
         t.Start();
     }
 
-
-    private void foo()
+// delete product, that wasn't picked in 90 seconds
+    private void DeleteOldProduct()
     {
-        Thread timeAfterReady = new Thread(() =>
+        var timeAfterReady = new Thread(() =>
         {
-            int time = 0;
+            var time = 0;
             while (time < 90)
             {
                 time++;
@@ -312,7 +314,7 @@ public class CreateSquare : MonoBehaviour
             {
                 if (activeSquare != 3 && isReady)
                 {
-                    Debug.Log("delete foo: transform = " + transform.name);
+                    //Debug.Log("delete old product: transform = " + transform.name);
                     GetComponent<Renderer>().material.color = new Color32(240, 10, 10, 255);
                     isReady = false;
                 }
@@ -345,6 +347,6 @@ public class CreateSquare : MonoBehaviour
 [Serializable]
 public class Save
 {
-    public int whatIsActive = 0, chickenEgg, cowMilk;
+    public int whatIsActive, chickenEgg, cowMilk;
     public bool isReady;
 }

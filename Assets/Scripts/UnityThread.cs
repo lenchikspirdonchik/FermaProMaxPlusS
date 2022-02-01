@@ -1,98 +1,88 @@
-﻿
-   #define ENABLE_UPDATE_FUNCTION_CALLBACK
+﻿#define ENABLE_UPDATE_FUNCTION_CALLBACK
 #define ENABLE_LATEUPDATE_FUNCTION_CALLBACK
 #define ENABLE_FIXEDUPDATE_FUNCTION_CALLBACK
 
 using System;
 using System.Collections;
-using UnityEngine;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 public class UnityThread : MonoBehaviour
 {
     //our (singleton) instance
-    private static UnityThread instance = null;
+    private static UnityThread instance;
 
 
     ////////////////////////////////////////////////UPDATE IMPL////////////////////////////////////////////////////////
     //Holds actions received from another Thread. Will be coped to actionCopiedQueueUpdateFunc then executed from there
-    private static List<System.Action> actionQueuesUpdateFunc = new List<Action>();
-
-    //holds Actions copied from actionQueuesUpdateFunc to be executed
-    List<System.Action> actionCopiedQueueUpdateFunc = new List<System.Action>();
+    private static readonly List<Action> actionQueuesUpdateFunc = new List<Action>();
 
     // Used to know if whe have new Action function to execute. This prevents the use of the lock keyword every frame
-    private volatile static bool noActionQueueToExecuteUpdateFunc = true;
+    private static volatile bool noActionQueueToExecuteUpdateFunc = true;
 
 
     ////////////////////////////////////////////////LATEUPDATE IMPL////////////////////////////////////////////////////////
     //Holds actions received from another Thread. Will be coped to actionCopiedQueueLateUpdateFunc then executed from there
-    private static List<System.Action> actionQueuesLateUpdateFunc = new List<Action>();
-
-    //holds Actions copied from actionQueuesLateUpdateFunc to be executed
-    List<System.Action> actionCopiedQueueLateUpdateFunc = new List<System.Action>();
+    private static readonly List<Action> actionQueuesLateUpdateFunc = new List<Action>();
 
     // Used to know if whe have new Action function to execute. This prevents the use of the lock keyword every frame
-    private volatile static bool noActionQueueToExecuteLateUpdateFunc = true;
-
+    private static volatile bool noActionQueueToExecuteLateUpdateFunc = true;
 
 
     ////////////////////////////////////////////////FIXEDUPDATE IMPL////////////////////////////////////////////////////////
     //Holds actions received from another Thread. Will be coped to actionCopiedQueueFixedUpdateFunc then executed from there
-    private static List<System.Action> actionQueuesFixedUpdateFunc = new List<Action>();
-
-    //holds Actions copied from actionQueuesFixedUpdateFunc to be executed
-    List<System.Action> actionCopiedQueueFixedUpdateFunc = new List<System.Action>();
+    private static readonly List<Action> actionQueuesFixedUpdateFunc = new List<Action>();
 
     // Used to know if whe have new Action function to execute. This prevents the use of the lock keyword every frame
-    private volatile static bool noActionQueueToExecuteFixedUpdateFunc = true;
+    private static volatile bool noActionQueueToExecuteFixedUpdateFunc = true;
 
+    //holds Actions copied from actionQueuesFixedUpdateFunc to be executed
+    private readonly List<Action> actionCopiedQueueFixedUpdateFunc = new List<Action>();
 
-    //Used to initialize UnityThread. Call once before any function here
-    public static void initUnityThread(bool visible = false)
-    {
-        if (instance != null)
-        {
-            return;
-        }
+    //holds Actions copied from actionQueuesLateUpdateFunc to be executed
+    private readonly List<Action> actionCopiedQueueLateUpdateFunc = new List<Action>();
 
-        if (Application.isPlaying)
-        {
-            // add an invisible game object to the scene
-            GameObject obj = new GameObject("MainThreadExecuter");
-            if (!visible)
-            {
-                obj.hideFlags = HideFlags.HideAndDontSave;
-            }
-
-            DontDestroyOnLoad(obj);
-            instance = obj.AddComponent<UnityThread>();
-        }
-    }
+    //holds Actions copied from actionQueuesUpdateFunc to be executed
+    private readonly List<Action> actionCopiedQueueUpdateFunc = new List<Action>();
 
     public void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
+    public void OnDisable()
+    {
+        if (instance == this) instance = null;
+    }
+
+
+    //Used to initialize UnityThread. Call once before any function here
+    public static void initUnityThread(bool visible = false)
+    {
+        if (instance != null) return;
+
+        if (Application.isPlaying)
+        {
+            // add an invisible game object to the scene
+            var obj = new GameObject("MainThreadExecuter");
+            if (!visible) obj.hideFlags = HideFlags.HideAndDontSave;
+
+            DontDestroyOnLoad(obj);
+            instance = obj.AddComponent<UnityThread>();
+        }
+    }
+
     //////////////////////////////////////////////COROUTINE IMPL//////////////////////////////////////////////////////
 #if (ENABLE_UPDATE_FUNCTION_CALLBACK)
     public static void executeCoroutine(IEnumerator action)
     {
-        if (instance != null)
-        {
-            executeInUpdate(() => instance.StartCoroutine(action));
-        }
+        if (instance != null) executeInUpdate(() => instance.StartCoroutine(action));
     }
 
     ////////////////////////////////////////////UPDATE IMPL////////////////////////////////////////////////////
-    public static void executeInUpdate(System.Action action)
+    public static void executeInUpdate(Action action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException("action");
-        }
+        if (action == null) throw new ArgumentNullException("action");
 
         lock (actionQueuesUpdateFunc)
         {
@@ -103,10 +93,7 @@ public class UnityThread : MonoBehaviour
 
     public void Update()
     {
-        if (noActionQueueToExecuteUpdateFunc)
-        {
-            return;
-        }
+        if (noActionQueueToExecuteUpdateFunc) return;
 
         //Clear the old actions from the actionCopiedQueueUpdateFunc queue
         actionCopiedQueueUpdateFunc.Clear();
@@ -120,21 +107,15 @@ public class UnityThread : MonoBehaviour
         }
 
         // Loop and execute the functions from the actionCopiedQueueUpdateFunc
-        for (int i = 0; i < actionCopiedQueueUpdateFunc.Count; i++)
-        {
-            actionCopiedQueueUpdateFunc[i].Invoke();
-        }
+        for (var i = 0; i < actionCopiedQueueUpdateFunc.Count; i++) actionCopiedQueueUpdateFunc[i].Invoke();
     }
 #endif
 
     ////////////////////////////////////////////LATEUPDATE IMPL////////////////////////////////////////////////////
 #if (ENABLE_LATEUPDATE_FUNCTION_CALLBACK)
-    public static void executeInLateUpdate(System.Action action)
+    public static void executeInLateUpdate(Action action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException("action");
-        }
+        if (action == null) throw new ArgumentNullException("action");
 
         lock (actionQueuesLateUpdateFunc)
         {
@@ -146,10 +127,7 @@ public class UnityThread : MonoBehaviour
 
     public void LateUpdate()
     {
-        if (noActionQueueToExecuteLateUpdateFunc)
-        {
-            return;
-        }
+        if (noActionQueueToExecuteLateUpdateFunc) return;
 
         //Clear the old actions from the actionCopiedQueueLateUpdateFunc queue
         actionCopiedQueueLateUpdateFunc.Clear();
@@ -163,21 +141,15 @@ public class UnityThread : MonoBehaviour
         }
 
         // Loop and execute the functions from the actionCopiedQueueLateUpdateFunc
-        for (int i = 0; i < actionCopiedQueueLateUpdateFunc.Count; i++)
-        {
-            actionCopiedQueueLateUpdateFunc[i].Invoke();
-        }
+        for (var i = 0; i < actionCopiedQueueLateUpdateFunc.Count; i++) actionCopiedQueueLateUpdateFunc[i].Invoke();
     }
 #endif
 
     ////////////////////////////////////////////FIXEDUPDATE IMPL//////////////////////////////////////////////////
 #if (ENABLE_FIXEDUPDATE_FUNCTION_CALLBACK)
-    public static void executeInFixedUpdate(System.Action action)
+    public static void executeInFixedUpdate(Action action)
     {
-        if (action == null)
-        {
-            throw new ArgumentNullException("action");
-        }
+        if (action == null) throw new ArgumentNullException("action");
 
         lock (actionQueuesFixedUpdateFunc)
         {
@@ -188,10 +160,7 @@ public class UnityThread : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (noActionQueueToExecuteFixedUpdateFunc)
-        {
-            return;
-        }
+        if (noActionQueueToExecuteFixedUpdateFunc) return;
 
         //Clear the old actions from the actionCopiedQueueFixedUpdateFunc queue
         actionCopiedQueueFixedUpdateFunc.Clear();
@@ -205,18 +174,7 @@ public class UnityThread : MonoBehaviour
         }
 
         // Loop and execute the functions from the actionCopiedQueueFixedUpdateFunc
-        for (int i = 0; i < actionCopiedQueueFixedUpdateFunc.Count; i++)
-        {
-            actionCopiedQueueFixedUpdateFunc[i].Invoke();
-        }
+        for (var i = 0; i < actionCopiedQueueFixedUpdateFunc.Count; i++) actionCopiedQueueFixedUpdateFunc[i].Invoke();
     }
 #endif
-
-    public void OnDisable()
-    {
-        if (instance == this)
-        {
-            instance = null;
-        }
-    }
 }

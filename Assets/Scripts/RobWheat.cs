@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading;
 using UnityEngine;
@@ -16,7 +15,7 @@ public class RobWheat : MonoBehaviour
     private void Start()
     {
         UnityThread.initUnityThread();
-        String buffPath = "Save_data_RobWheat.json";
+        var buffPath = "Save_data_RobWheat.json";
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
             path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
@@ -29,12 +28,13 @@ public class RobWheat : MonoBehaviour
                 chance = save.chance;
         }
 
-        Thread threadBird = new Thread(() =>
+        //three threads - three different ways to steal wheat from the user
+        var threadBird = new Thread(() =>
         {
             while (true)
             {
-                Random rnd = new Random();
-                int chislo = rnd.Next(1, chance);
+                var rnd = new Random();
+                var chislo = rnd.Next(1, chance);
 
                 if (chislo == 1)
                 {
@@ -44,11 +44,9 @@ public class RobWheat : MonoBehaviour
                         transform.GetChild(chislo).GetComponent<Renderer>().material.color =
                             new Color32(84, 53, 13, 255);
                         foreach (Transform eachChild in transform.GetChild(chislo))
-                        {
                             if (eachChild.name == "P_AncientRuins_Plants20(Clone)")
 
                                 Destroy(eachChild.gameObject);
-                        }
 
                         birdImg.SetActive(true);
                     });
@@ -61,12 +59,12 @@ public class RobWheat : MonoBehaviour
             }
         });
 
-        Thread threadBadWheat = new Thread(() =>
+        var threadBadWheat = new Thread(() =>
         {
             while (true)
             {
-                Random rnd = new Random();
-                int chislo = rnd.Next(1, 55000);
+                var rnd = new Random();
+                var chislo = rnd.Next(1, 95000);
 
                 if (chislo == 2)
                 {
@@ -82,18 +80,18 @@ public class RobWheat : MonoBehaviour
             }
         });
 
-        Thread threadDrought = new Thread(() =>
+        var threadDrought = new Thread(() =>
         {
             while (true)
             {
-                Random rnd = new Random();
-                int chislo = rnd.Next(1, 45000);
+                var rnd = new Random();
+                var chislo = rnd.Next(1, 75000);
 
                 if (chislo == 3)
                 {
                     UnityThread.executeInUpdate(() =>
                     {
-                        for (int i = 0; i < 64; i += 3)
+                        for (var i = 0; i < 64; i += 3)
                         {
                             transform.GetChild(chislo).GetComponent<Renderer>().material.color =
                                 new Color32(84, 53, 13, 255);
@@ -120,9 +118,10 @@ public class RobWheat : MonoBehaviour
         threadDrought.Start();
     }
 
+// make the user pay us
     public void increaseChance()
     {
-        int money = int.Parse(txtmoney.text);
+        var money = int.Parse(txtmoney.text);
         if (money > 150)
         {
             chance += 10000;

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SC_MainMenu : MonoBehaviour
 {
@@ -10,15 +8,15 @@ public class SC_MainMenu : MonoBehaviour
     public GameObject CreditsMenu;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         MainMenuButton();
     }
 
-    public void PlayNowButton(String gameLevel)
+    public void PlayNowButton(string gameLevel)
     {
         // Play Now Button has been pressed, here you can initialize your game (For example Load a Scene called GameLevel etc.)
-        UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
+        SceneManager.LoadScene(gameLevel);
     }
 
     public void CreditsButton()
@@ -41,10 +39,11 @@ public class SC_MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void deleteSave(String gameLevel)
+    // delete all save files ans start the game from the beginning
+    public void deleteSave(string gameLevel)
     {
-        String buffPath = "Save_Cube (1).json";
-        String path;
+        var buffPath = "Save_Cube (1).json";
+        string path;
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, buffPath);
 #else
@@ -52,7 +51,7 @@ public class SC_MainMenu : MonoBehaviour
 #endif
         if (File.Exists(path))
         {
-            for (int i = 0; i < 97; i++)
+            for (var i = 0; i < 97; i++)
             {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         path = Path.Combine(Application.persistentDataPath, "Save_Cube (" + i + ").json");
@@ -69,6 +68,6 @@ public class SC_MainMenu : MonoBehaviour
             File.Delete(path);
         }
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(gameLevel);
+        SceneManager.LoadScene(gameLevel);
     }
 }
