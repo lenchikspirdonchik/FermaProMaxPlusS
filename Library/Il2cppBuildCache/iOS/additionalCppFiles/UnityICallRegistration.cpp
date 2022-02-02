@@ -50,6 +50,10 @@ void RegisterAllStrippedInternalCalls()
 
 	//Start Registrations for type : UnityEngine.Application
 
+		//System.Boolean UnityEngine.Application::get_isBatchMode()
+		void Register_UnityEngine_Application_get_isBatchMode();
+		Register_UnityEngine_Application_get_isBatchMode();
+
 		//System.Boolean UnityEngine.Application::get_isPlaying()
 		void Register_UnityEngine_Application_get_isPlaying();
 		Register_UnityEngine_Application_get_isPlaying();
@@ -554,6 +558,10 @@ void RegisterAllStrippedInternalCalls()
 
 	//Start Registrations for type : UnityEngine.Experimental.Rendering.GraphicsFormatUtility
 
+		//System.Boolean UnityEngine.Experimental.Rendering.GraphicsFormatUtility::CanDecompressFormat(UnityEngine.Experimental.Rendering.GraphicsFormat,System.Boolean)
+		void Register_UnityEngine_Experimental_Rendering_GraphicsFormatUtility_CanDecompressFormat();
+		Register_UnityEngine_Experimental_Rendering_GraphicsFormatUtility_CanDecompressFormat();
+
 		//System.Boolean UnityEngine.Experimental.Rendering.GraphicsFormatUtility::IsCompressedTextureFormat(UnityEngine.TextureFormat)
 		void Register_UnityEngine_Experimental_Rendering_GraphicsFormatUtility_IsCompressedTextureFormat();
 		Register_UnityEngine_Experimental_Rendering_GraphicsFormatUtility_IsCompressedTextureFormat();
@@ -637,6 +645,10 @@ void RegisterAllStrippedInternalCalls()
 		//System.Void UnityEngine.GameObject::SetActive(System.Boolean)
 		void Register_UnityEngine_GameObject_SetActive();
 		Register_UnityEngine_GameObject_SetActive();
+
+		//System.Void UnityEngine.GameObject::TryGetComponentFastPath(System.Type,System.IntPtr)
+		void Register_UnityEngine_GameObject_TryGetComponentFastPath();
+		Register_UnityEngine_GameObject_TryGetComponentFastPath();
 
 		//System.Void UnityEngine.GameObject::set_layer(System.Int32)
 		void Register_UnityEngine_GameObject_set_layer();

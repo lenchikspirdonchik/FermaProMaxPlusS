@@ -31,6 +31,16 @@ public class ChooseWhatToPlant : MonoBehaviour
 
     private void Start()
     {
+        //define camera position
+        wheatSquarePosition = new Vector3(-4.37f, 6.76f, -8.15f);
+        chickenSquarePosition = new Vector3(-5.05f, 5.18f, 8.45f);
+        cowSquarePosition = new Vector3(-16.242f, 6.502f, 13.5f);
+        chickenSquareRotation = Quaternion.Euler(42.39f, 60.59f, 0f);
+        wheatSquareRotation = Quaternion.Euler(42.608f, 0.1f, 0f);
+        cowSquareRotation = Quaternion.Euler(31.614f, -44.887f, 0f);
+        realPosition = wheatSquarePosition;
+        realRotation = wheatSquareRotation;
+
         btnWheat.GetComponent<Graphic>().color = Color.red;
 
         var buffPath = "Save_data.json";
@@ -53,20 +63,7 @@ public class ChooseWhatToPlant : MonoBehaviour
         {
             // if game was started for the first time - show help panels
             panel1.SetActive(true);
-            panel2.SetActive(true);
-            panel3.SetActive(true);
-            panel6.SetActive(true);
         }
-
-        //define camera position
-        wheatSquarePosition = new Vector3(-4.37f, 6.76f, -8.15f);
-        chickenSquarePosition = new Vector3(-5.05f, 5.18f, 8.45f);
-        cowSquarePosition = new Vector3(-16.242f, 6.502f, 13.5f);
-        chickenSquareRotation = Quaternion.Euler(42.39f, 60.59f, 0f);
-        wheatSquareRotation = Quaternion.Euler(42.608f, 0.1f, 0f);
-        cowSquareRotation = Quaternion.Euler(31.614f, -44.887f, 0f);
-        realPosition = wheatSquarePosition;
-        realRotation = wheatSquareRotation;
     }
 
     //update camera position
@@ -94,7 +91,14 @@ public class ChooseWhatToPlant : MonoBehaviour
         panel6.SetActive(false);
     }
 
-//sell ready product and et money
+    public void nextHelp(int currentPanel)
+    {
+        GameObject[] objects = { panel1, panel2, panel3, panel6 };
+        objects[currentPanel].SetActive(false);
+        objects[++currentPanel].SetActive(true);
+    }
+
+    //sell ready product and get money
     public void Sell(Text txt)
     {
         var product = int.Parse(txt.text);
