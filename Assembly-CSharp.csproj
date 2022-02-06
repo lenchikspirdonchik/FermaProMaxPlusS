@@ -651,6 +651,9 @@
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
@@ -659,6 +662,9 @@
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Advertisements.Editor">
+ <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/Admin/Documents/Unity/FermaProMaxPlusS/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
