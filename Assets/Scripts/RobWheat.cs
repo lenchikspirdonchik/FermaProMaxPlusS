@@ -64,7 +64,7 @@ public class RobWheat : MonoBehaviour
             while (true)
             {
                 var rnd = new Random();
-                var chislo = rnd.Next(1, 95000);
+                var chislo = rnd.Next(1, 115000);
 
                 if (chislo == 2)
                 {
@@ -85,7 +85,7 @@ public class RobWheat : MonoBehaviour
             while (true)
             {
                 var rnd = new Random();
-                var chislo = rnd.Next(1, 75000);
+                var chislo = rnd.Next(1, 95000);
 
                 if (chislo == 3)
                 {
@@ -107,9 +107,6 @@ public class RobWheat : MonoBehaviour
 
                     Thread.Sleep(100);
                 }
-
-                Thread.Sleep(10);
-                if (chance > 5000) chance--;
             }
         });
 
