@@ -6,7 +6,7 @@ using Random = System.Random;
 
 public class RobWheat : MonoBehaviour
 {
-    private int chance = 5000;
+    private int chance = 100000;
     public Text txtmoney, txtWheat;
     public GameObject panelBadWheat, panelDrought, birdImg;
     private SaveRobWheat save = new SaveRobWheat();
@@ -64,7 +64,7 @@ public class RobWheat : MonoBehaviour
             while (true)
             {
                 var rnd = new Random();
-                var chislo = rnd.Next(1, 115000);
+                var chislo = rnd.Next(1, 600000);
 
                 if (chislo == 2)
                 {
@@ -76,7 +76,7 @@ public class RobWheat : MonoBehaviour
                     Thread.Sleep(100);
                 }
 
-                Thread.Sleep(2);
+                Thread.Sleep(50);
             }
         });
 
@@ -85,13 +85,13 @@ public class RobWheat : MonoBehaviour
             while (true)
             {
                 var rnd = new Random();
-                var chislo = rnd.Next(1, 95000);
+                var chislo = rnd.Next(1, 500000);
 
                 if (chislo == 3)
                 {
                     UnityThread.executeInUpdate(() =>
                     {
-                        for (var i = 0; i < 64; i += 3)
+                        for (var i = 0; i < 64; i += 15)
                         {
                             transform.GetChild(chislo).GetComponent<Renderer>().material.color =
                                 new Color32(84, 53, 13, 255);
