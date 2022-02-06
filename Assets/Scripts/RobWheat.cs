@@ -55,7 +55,7 @@ public class RobWheat : MonoBehaviour
                 }
 
                 Thread.Sleep(10);
-                if (chance > 5000) chance--;
+                if (chance > 10000) chance--;
             }
         });
 
@@ -122,9 +122,9 @@ public class RobWheat : MonoBehaviour
     public void increaseChance()
     {
         var money = int.Parse(txtmoney.text);
-        if (money > 150)
+        if (money > 110)
         {
-            chance += 10000;
+            chance += 30000;
             money -= 100;
             txtmoney.text = money.ToString();
         }
