@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class CreateSquare : MonoBehaviour
 {
@@ -16,10 +17,11 @@ public class CreateSquare : MonoBehaviour
     private Save save = new Save();
     private string path;
     private float lastClick;
-    private readonly float waitTime = 1.0f;
+    private readonly float waitTime = 2.0f;
     private float downTime;
+
     private bool isHandled;
-    private int chanceDrought = 1, chanceCombine = 2, chanceBird = 5000, chanceBadGood = 3, chanceWolf = 3000;
+    //private int chanceDrought = 1, chanceCombine = 2, chanceBird = 5000, chanceBadGood = 3, chanceWolf = 3000;
 
 
     private void Start()
@@ -69,7 +71,7 @@ public class CreateSquare : MonoBehaviour
         }
     }
 
-    //if we delete wheat in RobWheat.cs we must update this here
+    //if we delete wheat in RobWheat.cs we need to update it here
     private void Update()
     {
         if (transform.childCount == 0)
@@ -196,7 +198,6 @@ public class CreateSquare : MonoBehaviour
 
 
 // plant cow
-// really??? thank you, i can't undestand it
     private void PlantCow()
     {
         var counter = int.Parse(txtWheat.text);
@@ -204,7 +205,7 @@ public class CreateSquare : MonoBehaviour
         {
             while (activeSquare != 2 && counter < 3)
             {
-                Thread.Sleep(1500);
+                Thread.Sleep(new Random().Next(1500, 2000));
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
 
@@ -242,7 +243,7 @@ public class CreateSquare : MonoBehaviour
         {
             while (activeSquare != 1 && counter < 2)
             {
-                Thread.Sleep(1500);
+                Thread.Sleep(new Random().Next(1500, 2000));
                 UnityThread.executeInUpdate(() => { counter = int.Parse(txtWheat.text); });
             }
 
@@ -281,7 +282,7 @@ public class CreateSquare : MonoBehaviour
     {
         var t = new Thread(() =>
         {
-            Thread.Sleep(20000);
+            Thread.Sleep(new Random().Next(20000, 20200));
             UnityThread.executeInUpdate(() =>
             {
                 if (activeSquare == 0)

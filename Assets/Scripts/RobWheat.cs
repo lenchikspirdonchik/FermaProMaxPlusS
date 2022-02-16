@@ -6,7 +6,7 @@ using Random = System.Random;
 
 public class RobWheat : MonoBehaviour
 {
-    private int chance = 100000;
+    public static int chance = 100000;
     public Text txtmoney, txtWheat;
     public GameObject panelBadWheat, panelDrought, birdImg;
     private SaveRobWheat save = new SaveRobWheat();
@@ -114,6 +114,7 @@ public class RobWheat : MonoBehaviour
         threadBadWheat.Start();
         threadDrought.Start();
     }
+
 
 // make the user pay us
     public void increaseChance()
